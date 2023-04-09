@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1681026716 source:c:\users\21625\documents\2022-2023\mp c++\simulationboursev2\main.cpp
+	<iostream>
+	"date.h"
+
+1681027021 c:\users\21625\documents\2022-2023\mp c++\simulationboursev2\date.h
+
+1681027145 source:c:\users\21625\documents\2022-2023\mp c++\simulationboursev2\date.cpp
+	<iostream>
+	<string>
+	<sstream>
+	"date.h"
+

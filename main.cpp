@@ -14,6 +14,9 @@ int main()
     t.incrementerDate_finAnnee();
     t.initialiserDate_chaine1();
     t.initialiserDate_chaine2();
-    t.superieur();
+    t.inferieur();
+    Date d1(9, 4, 2023);
+    cout<<d1;
+
     return 0;
 }

@@ -11,3 +11,16 @@
 	<sstream>
 	"date.h"
 
+1681132038 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\main.cpp
+	<iostream>
+	"date.h"
+
+1681132521 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\date.h
+	<iostream>
+
+1681132521 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\date.cpp
+	<iostream>
+	<string>
+	<sstream>
+	"date.h"
+

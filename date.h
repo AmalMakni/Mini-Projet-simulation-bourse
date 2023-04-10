@@ -1,5 +1,6 @@
 #ifndef DATE_H_INCLUDED
 #define DATE_H_INCLUDED
+#include <iostream>
 using namespace std ;
 class Date
 {
@@ -11,13 +12,16 @@ class Date
         int NbrJourDuMois ();
     public :
         Date ( int j , int m , int a );
-        Date(std::string date);
+        Date(string date);
         void incrementrerDate ();
         void afficher ();
         int getJour();
         int getMois();
         int getAnnee();
-        friend bool operator<(Date const &a, Date const& b);
+        bool operator<(Date const &b);
+        bool operator==(Date const &d);
+        friend ostream& operator<<(ostream& flux, Date const &d);
+        friend istream& operator>>(istream& flux, Date d);
 };
 class TestDate
 {
@@ -30,8 +34,16 @@ class TestDate
         void incrementerDate_finAnnee();
         void initialiserDate_chaine1();
         void initialiserDate_chaine2();
-        void superieur();
+        void inferieur();
+        void verifier (Date d1, Date d2, string msessage);
 };
+
+//class FormateurDate
+//{
+//    public:
+//        ostream& operator<<(ostream& flux, Date const &d);
+//        istream& operator>>(istream& flux, Date d);
+//};
 
 
 #endif // DATE_H_INCLUDED

@@ -78,10 +78,18 @@ void Date::afficher()
     cout << jour << "/"<< mois<<"/"<<annee;
 }
 //la date plus ancienne est considérée inférieure à la date la plus récente
-bool operator<(Date const &a, Date const& b)
+bool Date::operator<(Date const &b)
 {
-    int test=b.jour+100*b.mois+10000*b.annee-(a.jour+100*a.mois+10000*a.annee);
+    int test=b.jour+100*b.mois+10000*b.annee-(jour+100*mois+10000*annee);
     if (test>0)
+        return true;
+    else
+        return false;
+}
+
+bool Date::operator==(Date const &d)
+{
+    if (jour==d.jour && mois==d.mois && annee==d.annee)
         return true;
     else
         return false;
@@ -91,77 +99,85 @@ void TestDate::incrementerDate()
 {
     Date d(8,4,2023);
     d.incrementrerDate();
-    if (d.getJour()==9 && d.getMois()==4 && d.getAnnee()==2023)
-        cout<<"Test 1: Succes"<<endl;
-    else
-        cout<<"Test 1: Echec"<<endl;
+    Date d1(9,4,2023);
+    string message="echec incrementation " ;
+    verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois31()
 {
     Date d(31,3,2023);
     d.incrementrerDate();
-    if (d.getJour()==1 && d.getMois()==4 && d.getAnnee()==2023)
-        cout<<"Test 3: Succes"<<endl;
-    else
-        cout<<"Test 3: Echec"<<endl;
+    Date d1(1,4,2023);
+    string message="echec incrementation fin mois 31 " ;
+    verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois30()
 {
     Date d(30,4,2023);
     d.incrementrerDate();
-    if (d.getJour()==1 && d.getMois()==5 && d.getAnnee()==2023)
-        cout<<"Test 2: Succes"<<endl;
-    else
-        cout<<"Test 2: Echec"<<endl;
+    Date d1(1,5,2023);
+    string message="echec incrementation fin mois 30 " ;
+    verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois_fevrier_28()
 {
     Date d(28,2,2023);
     d.incrementrerDate();
-    if (d.getJour()==1 && d.getMois()==3 && d.getAnnee()==2023)
-        cout<<"Test 4: Succes"<<endl;
-    else
-        cout<<"Test 4: Echec"<<endl;
+    Date d1(1,3,2023);
+    string message="echec incrementation fin fevrier non bissextile " ;
+    verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois_fevrier_29()
 {
     Date d(28,2,2024);
     d.incrementrerDate();
-    if (d.getJour()==29 && d.getMois()==2 && d.getAnnee()==2024)
-        cout<<"Test 5: Succes"<<endl;
-    else
-        cout<<"Test 5: Echec"<<endl;
+    Date d1(29,2,2024);
+    string message="echec incrementation fin fevrier bissextile" ;
+    verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finAnnee()
 {
     Date d(31,12,2023);
     d.incrementrerDate();
-    if (d.getJour()==1 && d.getMois()==1 && d.getAnnee()==2024)
-        cout<<"Test 6: Succes"<<endl;
-    else
-        cout<<"Test 6: Echec"<<endl;
+    Date d1(1,1,2024);
+    string message="echec incrementation fin annee " ;
+    verifier(d,d1,message);
 }
 void TestDate::initialiserDate_chaine1()
 {
     Date d("01/03/2023");
-    if (d.getJour()==1 && d.getMois()==3 && d.getAnnee()==2023)
-        cout<<"Test 7: Succes"<<endl;
-    else
-        cout<<"Test 7: Echec"<<endl;
+    Date d1(1,3,2023);
+    string message="echec initialition a partir d une chaine " ;
+    verifier(d,d1,message);
 }
 void TestDate::initialiserDate_chaine2()
 {
     Date d("1/3/2023");
-    if (d.getJour()==1 && d.getMois()==3 && d.getAnnee()==2023)
-        cout<<"Test 8: Succes"<<endl;
-    else
-        cout<<"Test 8: Echec"<<endl;
+    Date d1(1,3,2023);
+    string message="echec initialition a partir d une chaine sans 0 " ;
+    verifier(d,d1,message);
 }
-void TestDate::superieur()
+void TestDate::inferieur()
 {
     Date d1(9, 4, 2023), d2(10,4,2023);
     if (d1<d2)
-        cout<<"Test 9: Succes"<<endl;
+        cout<<"Succes"<<endl;
     else
-        cout<<"Test 9: Echec"<<endl;
+        cout<<"inferieur : Echec"<<endl;
+}
+void TestDate::verifier(Date d1, Date d2, string message)
+{
+    if (!(d1==d2))
+        cout << message << endl ;
+    else
+        cout << "succes" << endl ;
+}
+ostream& operator<<(ostream& flux, Date const &d)
+{
+    flux<<d.jour<<"/"<<d.mois<<"/"<<d.annee;
+    return flux;
+}
+istream& operator>>(istream& flux, Date d)
+{
+
 }

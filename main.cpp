@@ -1,5 +1,6 @@
 #include <iostream>
 #include "date.h"
+#include "PrixJournalier.h"
 
 using namespace std;
 
@@ -16,7 +17,15 @@ int main()
     t.initialiserDate_chaine2();
     t.inferieur();
     Date d1(9, 4, 2023);
-    cout<<d1;
+
+//    cin>>d1;
+//    cout<<d1;
+    PrixJournalier pj;
+    cin>>pj;
+    cout<<"le prix journalier est"<<endl;
+    cout<<pj.getDate()<<endl;
+    cout<<pj.getNom()<<endl<<pj.getPrix();
+
 
     return 0;
 }

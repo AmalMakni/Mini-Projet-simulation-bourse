@@ -2,7 +2,9 @@
 #include <string>
 #include <sstream>
 #include "date.h"
-using namespace std ;
+
+using namespace std;
+
 int Date::getAnnee()
 {
     return annee;
@@ -40,6 +42,11 @@ int Date::NbrJourDuMois()
         return 31 ;
 }
 
+Date:: Date()
+{
+
+}
+
 Date :: Date(int j , int m , int a): jour(j),mois(m),annee(a)
 {
 
@@ -47,7 +54,7 @@ Date :: Date(int j , int m , int a): jour(j),mois(m),annee(a)
 Date :: Date(string date )
 {
     stringstream ss(date);
-    string registre ;
+    string registre;
     getline(ss,registre,'/');
     jour=stoi(registre);
     getline(ss,registre,'/');
@@ -100,7 +107,7 @@ void TestDate::incrementerDate()
     Date d(8,4,2023);
     d.incrementrerDate();
     Date d1(9,4,2023);
-    string message="echec incrementation " ;
+    string message="echec incrementation";
     verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois31()
@@ -108,7 +115,7 @@ void TestDate::incrementerDate_finDuMois31()
     Date d(31,3,2023);
     d.incrementrerDate();
     Date d1(1,4,2023);
-    string message="echec incrementation fin mois 31 " ;
+    string message="echec incrementation fin mois 31";
     verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois30()
@@ -116,7 +123,7 @@ void TestDate::incrementerDate_finDuMois30()
     Date d(30,4,2023);
     d.incrementrerDate();
     Date d1(1,5,2023);
-    string message="echec incrementation fin mois 30 " ;
+    string message="echec incrementation fin mois 30";
     verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois_fevrier_28()
@@ -124,7 +131,7 @@ void TestDate::incrementerDate_finDuMois_fevrier_28()
     Date d(28,2,2023);
     d.incrementrerDate();
     Date d1(1,3,2023);
-    string message="echec incrementation fin fevrier non bissextile " ;
+    string message="echec incrementation fin fevrier non bissextile";
     verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finDuMois_fevrier_29()
@@ -132,7 +139,7 @@ void TestDate::incrementerDate_finDuMois_fevrier_29()
     Date d(28,2,2024);
     d.incrementrerDate();
     Date d1(29,2,2024);
-    string message="echec incrementation fin fevrier bissextile" ;
+    string message="echec incrementation fin fevrier bissextile";
     verifier(d,d1,message);
 }
 void TestDate::incrementerDate_finAnnee()
@@ -140,21 +147,21 @@ void TestDate::incrementerDate_finAnnee()
     Date d(31,12,2023);
     d.incrementrerDate();
     Date d1(1,1,2024);
-    string message="echec incrementation fin annee " ;
+    string message="echec incrementation fin annee";
     verifier(d,d1,message);
 }
 void TestDate::initialiserDate_chaine1()
 {
     Date d("01/03/2023");
     Date d1(1,3,2023);
-    string message="echec initialition a partir d une chaine " ;
+    string message="echec initialition a partir d une chaine";
     verifier(d,d1,message);
 }
 void TestDate::initialiserDate_chaine2()
 {
     Date d("1/3/2023");
     Date d1(1,3,2023);
-    string message="echec initialition a partir d une chaine sans 0 " ;
+    string message="echec initialition a partir d une chaine sans 0.";
     verifier(d,d1,message);
 }
 void TestDate::inferieur()
@@ -163,21 +170,28 @@ void TestDate::inferieur()
     if (d1<d2)
         cout<<"Succes"<<endl;
     else
-        cout<<"inferieur : Echec"<<endl;
+        cout<<"inferieur: Echec"<<endl;
 }
 void TestDate::verifier(Date d1, Date d2, string message)
 {
     if (!(d1==d2))
-        cout << message << endl ;
+        cout << message << endl;
     else
-        cout << "succes" << endl ;
+        cout << "Succes" << endl;
 }
 ostream& operator<<(ostream& flux, Date const &d)
 {
     flux<<d.jour<<"/"<<d.mois<<"/"<<d.annee;
     return flux;
 }
-istream& operator>>(istream& flux, Date d)
+istream& operator>>(istream& flux, Date& d)
 {
-
+    char tab[1000];
+    flux.getline(tab,1000,'/');
+    d.jour=atoi(tab);
+    flux.getline(tab,1000,'/');
+    d.mois=atoi(tab);
+    flux.getline(tab,1000,',');
+    d.annee=atoi(tab);
+    return flux;
 }

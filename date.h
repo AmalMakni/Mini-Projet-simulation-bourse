@@ -1,18 +1,21 @@
 #ifndef DATE_H_INCLUDED
 #define DATE_H_INCLUDED
 #include <iostream>
+
 using namespace std ;
+
 class Date
 {
     private :
-        int jour ;
-        int mois ;
-        int annee ;
+        int jour;
+        int mois;
+        int annee;
         bool estuneanneebisextile ();
         int NbrJourDuMois ();
     public :
         Date ( int j , int m , int a );
         Date(string date);
+        Date();
         void incrementrerDate ();
         void afficher ();
         int getJour();
@@ -21,7 +24,7 @@ class Date
         bool operator<(Date const &b);
         bool operator==(Date const &d);
         friend ostream& operator<<(ostream& flux, Date const &d);
-        friend istream& operator>>(istream& flux, Date d);
+        friend istream& operator>>(istream& flux, Date& d);
 };
 class TestDate
 {
@@ -38,12 +41,6 @@ class TestDate
         void verifier (Date d1, Date d2, string msessage);
 };
 
-//class FormateurDate
-//{
-//    public:
-//        ostream& operator<<(ostream& flux, Date const &d);
-//        istream& operator>>(istream& flux, Date d);
-//};
 
 
 #endif // DATE_H_INCLUDED

@@ -20,7 +20,7 @@ istream& operator>>(istream& flux, PrixJournalier& pj)
 {
     flux>>pj.date;
     char tab[1000];
-    flux.getline(tab,1000,',');
+    flux.getline(tab,1000,';');
     pj.nomAction=tab;
     flux.getline(tab,1000);
     pj.prix=atof(tab);

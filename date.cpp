@@ -191,7 +191,7 @@ istream& operator>>(istream& flux, Date& d)
     d.jour=atoi(tab);
     flux.getline(tab,1000,'/');
     d.mois=atoi(tab);
-    flux.getline(tab,1000,',');
+    flux.getline(tab,1000,';');
     d.annee=atoi(tab);
     return flux;
 }

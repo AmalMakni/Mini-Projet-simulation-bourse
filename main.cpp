@@ -23,18 +23,18 @@ int main()
 
 //    cin>>d1;
 //    cout<<d1;
-    PrixJournalier pj;
-    cin>>pj;
-    cout<<"le prix journalier est"<<endl;
-    cout<<pj.getDate()<<endl;
-    cout<<pj.getNom()<<endl<<pj.getPrix();
+//    PrixJournalier pj;
+//    cin>>pj;
+//    cout<<"le prix journalier est"<<endl;
+//    cout<<pj.getDate()<<endl;
+//    cout<<pj.getNom()<<endl<<pj.getPrix();
     PersistancePrixJournaliers p;
     vector<PrixJournalier> v;
     v=p.lirePrixJournaliersDUnFichier("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\test.csv");
-    for (int i=0;i<3;i++){
+    //v=p.lirePrixJournaliersDUnFichier("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\prices_simple.csv");
+    for (int i=0;i<v.size();i++){
         cout<<"le prix journalier est"<<endl;
-        cout<<v[i].getDate()<<endl;
-        cout<<v[i].getNom()<<endl<<v[i].getPrix();
+        cout<<v[i].getDate()<<","<<v[i].getNom()<<","<<v[i].getPrix()<<endl;
     }
 
 

@@ -11,7 +11,7 @@
 	<sstream>
 	"date.h"
 
-1681504229 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\main.cpp
+1681591792 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\main.cpp
 	<iostream>
 	"date.h"
 	"PrixJournalier.h"
@@ -47,5 +47,18 @@
 1681493442 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\persistanceprixjournalier.h
 	<vector>
 	<fstream>
+	"PrixJournalier.h"
+
+1681590344 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\bourse.cpp
+	<iostream>
+	"date.h"
+	<vector>
+	"Bourse.h"
+	"PrixJournalier.h"
+
+1681587850 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\bourse.h
+	<iostream>
+	"date.h"
+	<vector>
 	"PrixJournalier.h"
 

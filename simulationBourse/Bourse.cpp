@@ -32,11 +32,4 @@ vector<double> BourseVecteur::getPrixJournalierParDate(Date d)
     return PrixAction;
 
 }
-class TestBourseVecteur
-{
-    public:
-        void getActionsDisponibleParDate_DateExistante();
-        void getActionsDisponibleParDate_DateNonExistante();
-        void getPrixJournalierParDate_DateExistante();
-        void getPrixJournalierParDate_DateNonExistante();
-};
+

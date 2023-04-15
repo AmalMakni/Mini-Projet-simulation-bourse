@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1681601224 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
+	<iostream>
+	"date.h"
+	<vector>
+	"Bourse.h"
+	"PrixJournalier.h"
+
+1681597677 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.h
+	<iostream>
+
+1681601224 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.h
+	<iostream>
+	"date.h"
+	<vector>
+	"PrixJournalier.h"
+
+1681597677 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\prixjournalier.h
+	"date.h"
+
+1681597677 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.cpp
+	<iostream>
+	<string>
+	<sstream>
+	"date.h"
+
+1681601181 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
+	<iostream>
+	"date.h"
+	"PrixJournalier.h"
+	<vector>
+	<fstream>
+	"PersistancePrixJournalier.h"
+
+1681597677 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\persistanceprixjournalier.h
+	<vector>
+	<fstream>
+	"PrixJournalier.h"
+
+1681597677 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\persistanceprixjournalier.cpp
+	"PersistancePrixJournalier.h"
+	"date.h"
+	<vector>
+	<iostream>
+	<fstream>
+
+1681597677 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\prixjournalier.cpp
+	"PrixJournalier.h"
+	"date.h"
+	<iostream>
+	<string>
+

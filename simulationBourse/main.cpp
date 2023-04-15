@@ -30,7 +30,7 @@ int main()
 //    cout<<pj.getNom()<<endl<<pj.getPrix();
     PersistancePrixJournaliers p;
     vector<PrixJournalier> v;
-    v=p.lirePrixJournaliersDUnFichier("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\test.csv");
+    v=p.lirePrixJournaliersDUnFichier("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\test.csv");
     //v=p.lirePrixJournaliersDUnFichier("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\prices_simple.csv");
     for (int i=0;i<v.size();i++){
         cout<<"le prix journalier est"<<endl;

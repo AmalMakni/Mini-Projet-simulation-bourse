@@ -6,6 +6,8 @@
 #include "PrixJournalier.h"
 #include "Bourse.h"
 #include "PersistancePrixJournalier.h"
+#include "Transaction.h"
+#include "Titre.h"
 
 using namespace std;
 
@@ -29,6 +31,12 @@ int main()
     tbv.getActionsDisponibleParDate_DateNonExistante();
     tbv.getPrixJournalierParDate_DateExistante();
     tbv.getPrixJournalierParDate_DateNonExistante();
+    //Test transaction:
+    TestTransaction ttx;
+    ttx.initialiserTransaction();
+    //test Titre
+    TestTitre tt;
+    tt.initialiserTitre();
 
     Date d1(9, 4, 2023);
 

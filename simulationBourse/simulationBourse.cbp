@@ -32,6 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Bourse.cpp" />
+		<Unit filename="Bourse.h" />
+		<Unit filename="PersistancePrixJournalier.cpp" />
+		<Unit filename="PersistancePrixJournalier.h" />
+		<Unit filename="PrixJournalier.cpp" />
+		<Unit filename="PrixJournalier.h" />
+		<Unit filename="date.cpp" />
+		<Unit filename="date.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

@@ -7,12 +7,12 @@
 #include "PrixJournalier.h"
 
 class Bourse{
-    private :
-        Date dateFinRecherche ;
+    protected :
+        Date dateAujourdhui;
     public :
         Bourse (Date date );
         virtual vector<string> getActionsDisponibleParDate(Date)=0;
-        virtual vector<double> getPrixJournalierParDate(Date)=0;
+        virtual vector<PrixJournalier> getPrixJournalierParDate(Date)=0;
 };
 
 class BourseVecteur : public Bourse {
@@ -21,7 +21,18 @@ class BourseVecteur : public Bourse {
     public :
         BourseVecteur (Date date , vector<PrixJournalier> pj);
         vector<string> getActionsDisponibleParDate(Date);
-        vector<double> getPrixJournalierParDate(Date);
+        vector<PrixJournalier> getPrixJournalierParDate(Date);
+
+
+};
+
+class BourseVecteurOptimisee : public Bourse {
+    private :
+        vector<PrixJournalier> historique  ;
+    public :
+        BourseVecteurOptimisee (Date date , vector<PrixJournalier> pj);
+        vector<string> getActionsDisponibleParDate(Date);
+        vector<PrixJournalier> getPrixJournalierParDate(Date);
 
 
 };

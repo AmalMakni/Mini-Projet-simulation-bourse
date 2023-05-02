@@ -4,15 +4,15 @@
 #include <string>
 using namespace std;
 
-Date PrixJournalier::getDate()
+Date PrixJournalier::getDate() const
 {
     return date;
 }
-string PrixJournalier::getNom()
+string PrixJournalier::getNom() const
 {
     return nomAction;
 }
-double PrixJournalier::getPrix()
+double PrixJournalier::getPrix() const
 {
     return prix;
 }

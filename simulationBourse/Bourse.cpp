@@ -11,12 +11,12 @@ Bourse::Bourse ( Date date ) : dateAujourdhui(date)
 BourseVecteur::BourseVecteur(Date date , vector<PrixJournalier> pj) : Bourse(date),historique(pj)
 {}
 
-vector<string> BourseVecteur::getActionsDisponibleParDate(Date d)
+vector<string> BourseVecteur::getActionsDisponibleParDate(Date d) const
 {
   vector<string> ActionDispo;
    if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
   {
-    for ( int i =0 ; i<historique.size();i++)
+    for ( unsigned int i =0 ; i<historique.size();i++)
     {
       if ( historique[i].getDate()== d)
         ActionDispo.push_back(historique[i].getNom());
@@ -25,34 +25,86 @@ vector<string> BourseVecteur::getActionsDisponibleParDate(Date d)
   return ActionDispo;
 }
 
-vector<PrixJournalier> BourseVecteur::getPrixJournalierParDate(Date d)
+vector<PrixJournalier> BourseVecteur::getPrixJournalierParDate(Date d) const
 {
     vector<PrixJournalier> PrixAction;
     if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
     {
-        for ( int i =0 ; i< historique.size();i++)
+        for (unsigned int i =0 ; i< historique.size();i++)
         {
         if ( historique[i].getDate()== d)
-        PrixAction.push_back(historique[i]);
+            PrixAction.push_back(historique[i]);
         }
     }
 
     return PrixAction;
 
 }
+vector<string> BourseVecteur::getActionsDisponibleAujourdhui() const
+{
+    return getActionsDisponibleParDate(dateAujourdhui);
+}
+vector<PrixJournalier> BourseVecteur::getPrixJournalierAujourdhui() const
+{
+    return getPrixJournalierParDate(dateAujourdhui);
+}
+void BourseVecteur::setDateAujourdhui(Date d)
+{
+    dateAujourdhui=d;
+}
+
+vector<PrixJournalier> BourseVecteur::getPrixJournalierParDateParPrix(Date d, double budget) const
+{
+    vector<PrixJournalier> PrixAction;
+    if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+    {
+        for (unsigned int i =0 ; i< historique.size();i++)
+        {
+        if ( historique[i].getDate()== d &&  historique[i].getPrix()<=budget)
+            PrixAction.push_back(historique[i]);
+        }
+    }
+
+    return PrixAction;
+}
+vector<string> BourseVecteur::getActionsDisponibleParDateParPrix(Date d, double budget) const
+{
+    vector<string> ActionDispo;
+    if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+    {
+        for ( unsigned int i =0 ; i<historique.size();i++)
+        {
+          if ( historique[i].getDate()== d && historique[i].getPrix()<=budget)
+            ActionDispo.push_back(historique[i].getNom());
+        }
+    }
+  return ActionDispo;
+};
+PrixJournalier BourseVecteur::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
+{
+    PrixJournalier pjRecent;
+    unsigned int i=0;
+    while(i<historique.size())
+    {
+        if (historique[i].getNom()==nom && historique[i].getDate()<dateFin)
+            pjRecent=historique[i];
+        i++;
+    }
+    return pjRecent;
+};
 
 //Bourse Vecteur Optimisée
 
 BourseVecteurOptimisee::BourseVecteurOptimisee(Date date , vector<PrixJournalier> pj) : Bourse(date),historique(pj)
 {}
 
-vector<string> BourseVecteurOptimisee::getActionsDisponibleParDate(Date d)
+vector<string> BourseVecteurOptimisee::getActionsDisponibleParDate(Date d) const
 {
   vector<string> ActionDispo;
   //cout<<(!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))<<endl;
   if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
   {
-        int i=0;
+        unsigned int i=0;
         while(historique[i].getDate()<d && i<historique.size())
             i++;
         while(historique[i].getDate()==d && i<historique.size())
@@ -65,12 +117,12 @@ vector<string> BourseVecteurOptimisee::getActionsDisponibleParDate(Date d)
 
 }
 
-vector<PrixJournalier> BourseVecteurOptimisee::getPrixJournalierParDate(Date d)
+vector<PrixJournalier> BourseVecteurOptimisee::getPrixJournalierParDate(Date d) const
 {
     vector <PrixJournalier> prix;
     if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
     {
-        int i=0;
+        unsigned int i=0;
         while(historique[i].getDate()<d && i<historique.size())
             i++;
         while(historique[i].getDate()==d && i<historique.size())
@@ -81,6 +133,68 @@ vector<PrixJournalier> BourseVecteurOptimisee::getPrixJournalierParDate(Date d)
     }
     return prix;
 }
+
+
+vector<string> BourseVecteurOptimisee::getActionsDisponibleAujourdhui() const
+{
+    return getActionsDisponibleParDate(dateAujourdhui);
+}
+vector<PrixJournalier> BourseVecteurOptimisee::getPrixJournalierAujourdhui() const
+{
+    return getPrixJournalierParDate(dateAujourdhui);
+}
+void BourseVecteurOptimisee::setDateAujourdhui(Date d)
+{
+    dateAujourdhui=d;
+}
+vector<PrixJournalier> BourseVecteurOptimisee::getPrixJournalierParDateParPrix(Date d, double budget) const
+{
+    vector <PrixJournalier> prix;
+    if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+    {
+        unsigned int i=0;
+        while(historique[i].getDate()<d && i<historique.size())
+            i++;
+        while(historique[i].getDate()==d && i<historique.size())
+        {
+            if (historique[i].getPrix()<=budget)
+                prix.push_back(historique[i]);
+            i++;
+        }
+    }
+    return prix;
+}
+vector<string> BourseVecteurOptimisee::getActionsDisponibleParDateParPrix(Date d, double budget) const
+{
+  vector<string> actionDispo;
+  //cout<<(!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))<<endl;
+  if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+  {
+        unsigned int i=0;
+        while(historique[i].getDate()<d && i<historique.size())
+            i++;
+        while(historique[i].getDate()==d && i<historique.size())
+        {
+            if (historique[i].getPrix()<=budget)
+                actionDispo.push_back(historique[i].getNom());
+            i++;
+        }
+    }
+    return actionDispo;
+};
+
+PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
+{
+    PrixJournalier pjRecent;
+    unsigned int i=0;
+    while(historique[i].getDate()<dateFin && i<historique.size())
+    {
+        if (historique[i].getNom()==nom)
+            pjRecent=historique[i];
+        i++;
+    }
+    return pjRecent;
+};
 
 //Test Bourse Vecteur:
 
@@ -138,7 +252,7 @@ void TestBourseVecteur::getPrixJournalierParDate_DateExistante()
 
 void TestBourseVecteur::getPrixJournalierParDate_DateNonExistante()
 {
-    bool test;
+    //bool test;
     PersistancePrixJournaliers p;
     vector<PrixJournalier> v;
     v=p.lirePrixJournaliersDUnFichier("C:\\Users\\21625\\Desktop\\New folder\\test.csv");

@@ -5,15 +5,15 @@
 
 using namespace std;
 
-int Date::getAnnee()
+int Date::getAnnee() const
 {
     return annee;
 }
-int Date::getMois()
+int Date::getMois() const
 {
     return mois;
 }
-int Date::getJour()
+int Date::getJour() const
 {
     return jour;
 }
@@ -62,7 +62,7 @@ Date :: Date(string date )
     getline(ss,registre,'/');
     annee=stoi(registre);
 }
-void Date::incrementrerDate()
+void Date::incrementerDate()
 {
    int dd = NbrJourDuMois();
    // fin d'annee
@@ -85,7 +85,7 @@ void Date::afficher()
     cout << jour << "/"<< mois<<"/"<<annee;
 }
 //la date plus ancienne est considérée inférieure à la date la plus récente
-bool Date::operator<(Date const &b)
+bool Date::operator<(Date const &b) const
 {
     int test=b.jour+100*b.mois+10000*b.annee-(jour+100*mois+10000*annee);
     if (test>0)
@@ -94,7 +94,7 @@ bool Date::operator<(Date const &b)
         return false;
 }
 
-bool Date::operator==(Date const &d)
+bool Date::operator==(Date const &d) const
 {
     if (jour==d.jour && mois==d.mois && annee==d.annee)
         return true;
@@ -105,7 +105,7 @@ bool Date::operator==(Date const &d)
 void TestDate::incrementerDate()
 {
     Date d(8,4,2023);
-    d.incrementrerDate();
+    d.incrementerDate();
     Date d1(9,4,2023);
     string message="echec incrementation";
     verifier(d,d1,message);
@@ -113,7 +113,7 @@ void TestDate::incrementerDate()
 void TestDate::incrementerDate_finDuMois31()
 {
     Date d(31,3,2023);
-    d.incrementrerDate();
+    d.incrementerDate();
     Date d1(1,4,2023);
     string message="echec incrementation fin mois 31";
     verifier(d,d1,message);
@@ -121,7 +121,7 @@ void TestDate::incrementerDate_finDuMois31()
 void TestDate::incrementerDate_finDuMois30()
 {
     Date d(30,4,2023);
-    d.incrementrerDate();
+    d.incrementerDate();
     Date d1(1,5,2023);
     string message="echec incrementation fin mois 30";
     verifier(d,d1,message);
@@ -129,7 +129,7 @@ void TestDate::incrementerDate_finDuMois30()
 void TestDate::incrementerDate_finDuMois_fevrier_28()
 {
     Date d(28,2,2023);
-    d.incrementrerDate();
+    d.incrementerDate();
     Date d1(1,3,2023);
     string message="echec incrementation fin fevrier non bissextile";
     verifier(d,d1,message);
@@ -137,7 +137,7 @@ void TestDate::incrementerDate_finDuMois_fevrier_28()
 void TestDate::incrementerDate_finDuMois_fevrier_29()
 {
     Date d(28,2,2024);
-    d.incrementrerDate();
+    d.incrementerDate();
     Date d1(29,2,2024);
     string message="echec incrementation fin fevrier bissextile";
     verifier(d,d1,message);
@@ -145,7 +145,7 @@ void TestDate::incrementerDate_finDuMois_fevrier_29()
 void TestDate::incrementerDate_finAnnee()
 {
     Date d(31,12,2023);
-    d.incrementrerDate();
+    d.incrementerDate();
     Date d1(1,1,2024);
     string message="echec incrementation fin annee";
     verifier(d,d1,message);

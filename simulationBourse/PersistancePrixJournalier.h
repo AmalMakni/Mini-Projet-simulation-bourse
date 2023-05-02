@@ -24,6 +24,7 @@ class PersistancePrixJournaliers
                     nbLignes++;
                 }
             }
+            //cout<<endl<<"lecture terminee"<<endl;
             return historique;
         }
 };

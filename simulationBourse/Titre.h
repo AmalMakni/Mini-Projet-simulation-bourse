@@ -13,6 +13,7 @@ class Titre
         Titre(string nom, int qte);
         string getNomAction() const;
         int getQuantite() const;
+        void setQuantite(int q){quantite=q;};
 };
 
 class TestTitre

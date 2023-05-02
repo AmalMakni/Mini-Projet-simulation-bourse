@@ -10,11 +10,15 @@ class Trader
         virtual Transaction choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille)=0;
 };
 
-class TraderAleatoir
+class TraderAleatoir1: public Trader
 {
     public:
         Transaction choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille);
 };
 
-
+class TraderAleatoir2: public Trader
+{
+    public:
+        Transaction choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille);
+};
 #endif // TRADER_H_INCLUDED

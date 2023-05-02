@@ -4,19 +4,21 @@
 #include <string>
 using namespace std;
 
-enum TypeTx {achat, vente, rien};
+enum TypeTransaction {achat, vente, rien};
 
 class Transaction
 {
     private:
-        enum TypeTx type;
+        enum TypeTransaction type;
         string nomAction;
         int quantite;
     public:
-        Transaction(enum TypeTx t, string nom, int qte);
-        enum TypeTx getType()const;
+        Transaction(enum TypeTransaction, string nom, int qte);
+        Transaction(){};
+        enum TypeTransaction getType()const;
         string getNomAction()const;
         int getQuantite() const;
+
 };
 
 class TestTransaction

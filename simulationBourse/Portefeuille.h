@@ -7,15 +7,17 @@ class Portefeuille
 {
     private:
         double solde;
-        vector <Titre *> titres;
+        vector <Titre> titres;
     public:
-        Portefeuille(double s, vector <Titre *> vecteurTitres);
+        Portefeuille(double s);
         void ajouterAction(string nomAction, int qte);
         void retireTitre(string nomAction, int qte);
         void deposerMontant(double montant);
         void retirerMontant(double montant);
         double getSolde() const;
-        vector <Titre *> getTitres() const;
+        vector <Titre> getTitres() const;
+        void acheterAction (string , int , double );
+        void vendreAction (string , int , double );
 
 };
 

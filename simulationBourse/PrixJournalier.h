@@ -10,9 +10,9 @@ class PrixJournalier
         string nomAction;
         double prix;
     public:
-        Date getDate();
-        string getNom();
-        double getPrix();
+        Date getDate() const;
+        string getNom() const;
+        double getPrix() const;
         friend istream& operator>>(istream& flux, PrixJournalier& pj);
 
 };

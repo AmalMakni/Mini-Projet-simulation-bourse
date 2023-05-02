@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1682173821 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
+1682842568 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
 	<iostream>
 	"date.h"
 	<vector>
@@ -7,36 +7,41 @@
 	"PrixJournalier.h"
 	"PersistancePrixJournalier.h"
 
-1681597677 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.h
+1682281731 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.h
 	<iostream>
 
-1682172629 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.h
+1682842286 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.h
 	<iostream>
 	"date.h"
 	<vector>
 	"PrixJournalier.h"
 
-1681597677 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\prixjournalier.h
+1682207275 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\prixjournalier.h
 	"date.h"
 
-1681597677 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.cpp
+1682281731 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.cpp
 	<iostream>
 	<string>
 	<sstream>
 	"date.h"
 
-1682186868 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
+1682848227 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
 	<iostream>
 	<vector>
 	<fstream>
+	<stdlib.h>
+	<time.h>
 	"date.h"
 	"PrixJournalier.h"
 	"Bourse.h"
 	"PersistancePrixJournalier.h"
 	"Transaction.h"
 	"Titre.h"
+	"Portefeuille.h"
+	"Trader.h"
+	"Simulation.h"
 
-1681597677 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\persistanceprixjournalier.h
+1682590324 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\persistanceprixjournalier.h
 	<vector>
 	<fstream>
 	"PrixJournalier.h"
@@ -48,20 +53,20 @@
 	<iostream>
 	<fstream>
 
-1681597677 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\prixjournalier.cpp
+1682207274 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\prixjournalier.cpp
 	"PrixJournalier.h"
 	"date.h"
 	<iostream>
 	<string>
 
-1682186408 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\transaction.cpp
+1682286894 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\transaction.cpp
 	"Transaction.h"
 
-1682186386 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\transaction.h
+1682286894 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\transaction.h
 	<iostream>
 	<string>
 
-1682189306 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\portefeuille.cpp
+1682717701 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\portefeuille.cpp
 	"Portefeuille.h"
 	"Titre.h"
 	<vector>
@@ -71,13 +76,41 @@
 1682186887 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\titre.cpp
 	"Titre.h"
 
-1682188368 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\titre.h
+1682286906 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\titre.h
 	<iostream>
 	<string>
 
-1682189306 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\portefeuille.h
+1682347054 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\portefeuille.h
 	"Titre.h"
 	<vector>
 
-1682189527 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
+1682849903 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
+	<stdlib.h>
+	<iostream>
+	<vector>
+	<cmath>
+	"Trader.h"
+	"Transaction.h"
+	"Bourse.h"
+	"Portefeuille.h"
+	"Titre.h"
+
+1682620968 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.h
+	"Transaction.h"
+	"Bourse.h"
+	"Portefeuille.h"
+
+1682849982 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
+	<iostream>
+	<chrono>
+	<map>
+	"date.h"
+	"Bourse.h"
+	"Trader.h"
+	"Portefeuille.h"
+	"Simulation.h"
+	"Transaction.h"
+
+1682847148 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.h
+	<map>
 

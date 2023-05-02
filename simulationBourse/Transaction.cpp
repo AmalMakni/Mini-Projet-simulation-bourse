@@ -2,10 +2,11 @@
 using namespace std;
 
 
-Transaction::Transaction(enum TypeTx t, string nom, int qte): type(t), nomAction(nom), quantite(qte){};
-enum TypeTx Transaction::getType()const {return type;};
+Transaction::Transaction(enum TypeTransaction t, string nom, int qte): type(t), nomAction(nom), quantite(qte){};
+enum TypeTransaction Transaction::getType()const {return type;};
 string Transaction::getNomAction()const {return nomAction;};
 int Transaction::getQuantite() const {return quantite;};
+
 
 void TestTransaction::initialiserTransaction()
 {

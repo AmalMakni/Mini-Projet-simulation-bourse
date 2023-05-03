@@ -168,7 +168,7 @@ Transaction TraderAleatoir2::choisirTransaction (const Bourse& bourse, const Por
         }
         else
         {
-            Transaction tx(achat, "", -1);
+            Transaction tx(achat, "", 0);
             return tx;
         }
 
@@ -194,7 +194,7 @@ Transaction TraderAleatoir2::choisirTransaction (const Bourse& bourse, const Por
             }
             else
             {
-                Transaction tx(achat, "", -1);
+                Transaction tx(achat, "", 0);
                 return tx;
             }
         }
@@ -222,3 +222,24 @@ Transaction TraderAleatoir2::choisirTransaction (const Bourse& bourse, const Por
     }
 
 }
+
+Transaction TraderMovingAverage::choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille)
+{
+    vector<Titre> titres=portefeuille.getTitres();
+    if (titres.size()!=0)
+    {
+        bool vendre=false;
+        unsigned int i=0;
+        while(!vendre && i<titres.size())
+        {
+            vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(titres[i].getNomAction());
+            int m=0;
+            for(auto pj: historiqueAction)
+            {
+                m+=pj.getPrix();
+            }
+            m=m/(historiqueAction.size());
+
+        }
+    }
+};

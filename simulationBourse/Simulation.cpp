@@ -345,8 +345,8 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
     b.setDateAujourdhui(dateCourante);
     Transaction transaction;
     Portefeuille portefeuille(solde);
-    int achatBloque=0, venteBloquee=0, nbTransactionsBloquee;
-    int nbAchat=0, nbVente=0, nbRien=0, nbTransactionsReussites=0;
+    int achatBloque=0, venteBloquee=0;
+    int nbAchat=0, nbVente=0, nbRien=0;
     int nbJoursBourseFermee=0;
     stats["nonmbre de ventes (validees): "]=0;
     stats["nonmbre d'achats (valides): "]=0;
@@ -354,8 +354,10 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
     stats["nonmbre de ventes bloquees: "]=0;
     stats["nonmbre d'achats bloques: "]=0;
     stats["nonmbre de jours ou la bourse est fermee: "]=0;
-    stats["TEMPS_GET_ACTIONS_DISPO_AUJ_µs"]=0;
+    stats["TEMPS_GET_ACTIONS_DISPO_AUJ_MICROs"]=0;
+    stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"]=0;
     stats["TEMPS_CHOISIR_ACTION_MICROs"]=0;
+    stats["NOMBRE_CHOISIR_ACTION"]=0;
     while(dateCourante<dateFin)
     {
         //cout<<dateCourante<<endl;
@@ -363,7 +365,8 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
         vector<PrixJournalier> pjDispo=b.getPrixJournalierAujourdhui();
         auto stop = chrono::high_resolution_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-        stats["TEMPS_GET_ACTIONS_DISPO_AUJ_µs"]+=duration.count();
+        stats["TEMPS_GET_ACTIONS_DISPO_AUJ_MICROs"]+=duration.count();
+        stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"]++;
         int i=0;
         unsigned int j=0, k=0;
         if (pjDispo.size()!=0)
@@ -375,6 +378,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                 stop = chrono::high_resolution_clock::now();
                 duration = chrono::duration_cast<chrono::microseconds>(stop - start);
                 stats["TEMPS_CHOISIR_ACTION_MICROs"]+=duration.count();
+                stats["NOMBRE_CHOISIR_ACTION"]++;
                 //cout<<portefeuille.getSolde()<<endl;
                 if(transaction.getType()==achat)
                 {
@@ -386,7 +390,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                     {
                             j++;
                     }
-                   if((transaction.getQuantite()>=0) && (pjDispo[j].getNom()==transaction.getNomAction()) && (pjDispo[j].getPrix()*transaction.getQuantite()<=portefeuille.getSolde()))
+                   if((transaction.getQuantite()>0) && (pjDispo[j].getNom()==transaction.getNomAction()) && (pjDispo[j].getPrix()*transaction.getQuantite()<=portefeuille.getSolde()))
                         {
                             portefeuille.acheterAction(transaction.getNomAction(), transaction.getQuantite(), pjDispo[j].getPrix());
                             nbAchat++;
@@ -398,7 +402,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                         {
                             achatBloque++;
                             stats["nonmbre d'achats bloques: "]++;
-                            //cout<<"Transaction bloquee: "<<transaction.getNomAction()<<","<<transaction.getQuantite()<<","<<transaction.getType()<<";"<<portefeuille.getSolde()<<endl;
+                           // cout<<"Transaction bloquee: "<<transaction.getNomAction()<<","<<transaction.getQuantite()<<","<<transaction.getType()<<";"<<portefeuille.getSolde()<<endl;
                         }
 
                 }
@@ -420,7 +424,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
 
                     if(titresDispo.size()>0 && (titresDispo[k].getNomAction()==transaction.getNomAction())
                        && (pjDispo[j].getNom()==transaction.getNomAction())
-                       && transaction.getQuantite()<=titresDispo[k].getQuantite() && transaction.getQuantite()>=0)
+                       && transaction.getQuantite()<=titresDispo[k].getQuantite() && transaction.getQuantite()>0)
                     {
                         portefeuille.vendreAction(transaction.getNomAction(), transaction.getQuantite(), pjDispo[j].getPrix());
                         stats["nonmbre de ventes (validees): "]++;
@@ -456,8 +460,8 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
         b.setDateAujourdhui(dateCourante);
     }
 
-    nbTransactionsBloquee=achatBloque+venteBloquee;
-    nbTransactionsReussites=nbAchat+nbVente+nbRien;
+    //nbTransactionsBloquee=achatBloque+venteBloquee;
+    //nbTransactionsReussites=nbAchat+nbVente+nbRien;
     stats["nombre de transactions validees: "]=stats["nonmbre de transactions de type rien: "]+stats["nonmbre de ventes (validees): "]+stats["nonmbre d'achats (valides): "];
     stats["nombre de transactions bloquees: "]=stats["nonmbre de ventes bloquees: "]+stats["nonmbre d'achats bloques: "];
     //CALCUL DE LA VALEUR DU PORTEFEUILLE:
@@ -473,6 +477,11 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
         }
     }
     portefeuille.deposerMontant(montant);
+    stats["VALEUR_DU_PORTEFEUILLE"]=portefeuille.getSolde();
+    if(stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"]!=0)
+        stats["TEMPS_MOYEN_GET_ACTIONS_DISPO_AUJ_MICROs"]=stats["TEMPS_GET_ACTIONS_DISPO_AUJ_MICROs"]/stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"];
+    if(stats["NOMBRE_CHOISIR_ACTION"]!=0)
+        stats["TEMPS_MOYEN_CHOISIR_ACTION_MICROs"]=stats["TEMPS_CHOISIR_ACTION_MICROs"]/stats["NOMBRE_CHOISIR_ACTION"];
 //    cout<<"nbTransactionsBloquee: "<<nbTransactionsBloquee<<endl;
 //    cout<<"nbTransactionsReussites: "<<nbTransactionsReussites<<endl;
 //    cout<<"nbVenteBloquee: "<<venteBloquee<<endl;

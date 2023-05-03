@@ -92,6 +92,11 @@ PrixJournalier BourseVecteur::getPrixJournalierLePlusRecent(string nom, Date dat
     }
     return pjRecent;
 };
+vector<PrixJournalier> BourseVecteur::getHistoriqueParAction(string nom) const
+{
+    vector<PrixJournalier> historiqueAction;
+    return historiqueAction;
+}
 
 //Bourse Vecteur Optimisée
 
@@ -195,6 +200,18 @@ PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecent(string nom,
     }
     return pjRecent;
 };
+vector<PrixJournalier> BourseVecteurOptimisee::getHistoriqueParAction(string nom) const
+{
+    vector<PrixJournalier> historiqueAction;
+    unsigned int i=0;
+    while(i<historique.size() && historique[i].getDate()<dateAujourdhui)
+    {
+        if (historique[i].getNom()==nom)
+            historiqueAction.push_back(historique[i]);
+        i++;
+    }
+    return historiqueAction;
+}
 
 //Test Bourse Vecteur:
 

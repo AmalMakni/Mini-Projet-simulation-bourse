@@ -179,6 +179,11 @@ int main()
     vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
     ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
     BourseVecteurOptimisee b2(d1,v);
+//    vector<PrixJournalier> historiqueAction=b2.getHistoriqueParAction("NKE");
+//    for(auto pj: historiqueAction)
+//    {
+//        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
+//    }
     BourseVecteur b1(d1,v);
     //Portefeuille porte(100);
     auto stats = Simulation::executer(b2, trader2, d1, d2, 100);

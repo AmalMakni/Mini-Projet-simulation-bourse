@@ -22,7 +22,8 @@ class Bourse{
         virtual vector<PrixJournalier> getPrixJournalierAujourdhuiParPrix(double budget) const {return getPrixJournalierParDateParPrix(dateAujourdhui, budget);};
         virtual PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const=0;
         virtual vector<PrixJournalier> getHistoriqueParAction(string nom) const=0;
-        //virtual PrixJournalier getPrix
+        virtual Date getDateAujourdhui() const {return dateAujourdhui;};
+        //virtual PrixJournalier getPrixParDateParNom()
 };
 
 class BourseVecteur : public Bourse {

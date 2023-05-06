@@ -228,18 +228,64 @@ Transaction TraderMovingAverage::choisirTransaction(const Bourse& bourse, const 
     vector<Titre> titres=portefeuille.getTitres();
     if (titres.size()!=0)
     {
-        bool vendre=false;
+        cout<<"vente consideree"<<endl;
+        //bool vendre=false;
         unsigned int i=0;
-        while(!vendre && i<titres.size())
+        //while(!vendre && i<titres.size())
+        while(i<titres.size())
         {
             vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(titres[i].getNomAction());
-            int m=0;
+            double m=0;
             for(auto pj: historiqueAction)
             {
                 m+=pj.getPrix();
             }
             m=m/(historiqueAction.size());
-
+            cout<<titres[i].getNomAction()<<": "<<m<<endl;
+            PrixJournalier pjAujourdhui=bourse.getPrixJournalierLePlusRecent(titres[i].getNomAction(), bourse.getDateAujourdhui());
+            cout<<pjAujourdhui.getNom()<<","<<pjAujourdhui.getPrix()<<","<<pjAujourdhui.getDate()<<endl;
+            if(pjAujourdhui.getDate()==bourse.getDateAujourdhui() && pjAujourdhui.getPrix()<m)
+            {
+                Transaction tx(vente ,titres[i].getNomAction(), titres[i].getQuantite());
+                cout<<"Vente: "<<bourse.getDateAujourdhui()<<endl;
+                return tx;
+            }
+            i++;
         }
     }
+    vector<PrixJournalier> pjDispo=bourse.getPrixJournalierAujourdhuiParPrix(portefeuille.getSolde());
+    vector<double> movingAverages;
+    if (pjDispo.size()!=0)
+    {
+        for (auto pj: pjDispo)
+        {
+            vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(pj.getNom());
+            double m=0;
+            for(auto p: historiqueAction)
+            {
+                m+=p.getPrix();
+            }
+            if (historiqueAction.size()!=0)
+                m=m/(historiqueAction.size());
+            movingAverages.push_back(pj.getPrix()-m);
+        }
+        unsigned int j=0;
+        unsigned int maximum=0;
+        for (j=0;j<movingAverages.size(); j++)
+        {
+            if(movingAverages[j]>movingAverages[maximum])
+                maximum=j;
+        }
+        if (movingAverages[maximum]>0)
+        {
+            int qte=floor(portefeuille.getSolde()/pjDispo[maximum].getPrix());
+            Transaction tx(achat, pjDispo[maximum].getNom(), qte);
+            cout<<"achat: "<<bourse.getDateAujourdhui()<<endl;
+            return tx;
+        }
+    }
+    Transaction tx(rien, "", 0);
+    return tx;
+
+
 };

@@ -174,6 +174,7 @@ int main()
     PersistancePrixJournaliers p;
     TraderAleatoir2 trader2;
     TraderAleatoir1 trader;
+    TraderMovingAverage trader3;
     Date d1(2,12,2015), d2(17,12,2015);
 
     vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
@@ -187,6 +188,6 @@ int main()
     BourseVecteur b1(d1,v);
     //Portefeuille porte(100);
     auto stats = Simulation::executer(b2, trader2, d1, d2, 100);
-    for(auto it:stats){   cout<<it.first<<"\t"<<it.second<<endl; }
+    for(auto it:stats){   cout<<it.first<<"\t"<<it.second<<endl;}
 
 }

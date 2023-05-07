@@ -174,8 +174,9 @@ int main()
     PersistancePrixJournaliers p;
     TraderAleatoir2 trader2;
     TraderAleatoir1 trader;
-    TraderMovingAverage trader3;
-    Date d1(2,12,2015), d2(17,12,2015);
+    TraderMovingAverage2 trader3;
+    TraderMovingAverage trader4;
+    Date d1(2,12,2015), d2(20,12,2015);
 
     vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
     ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
@@ -187,7 +188,7 @@ int main()
 //    }
     BourseVecteur b1(d1,v);
     //Portefeuille porte(100);
-    auto stats = Simulation::executer(b2, trader2, d1, d2, 100);
+    auto stats = Simulation::executer(b2, trader4, d1, d2, 10000);
     for(auto it:stats){   cout<<it.first<<"\t"<<it.second<<endl;}
-
+    //double m=b2.movingAverage("JEC", 3);
 }

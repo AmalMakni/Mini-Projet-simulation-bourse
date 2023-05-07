@@ -8,14 +8,17 @@ Date PrixJournalier::getDate() const
 {
     return date;
 }
+
 string PrixJournalier::getNom() const
 {
     return nomAction;
 }
+
 double PrixJournalier::getPrix() const
 {
     return prix;
 }
+
 istream& operator>>(istream& flux, PrixJournalier& pj)
 {
     flux>>pj.date;

@@ -92,10 +92,16 @@ PrixJournalier BourseVecteur::getPrixJournalierLePlusRecent(string nom, Date dat
     }
     return pjRecent;
 };
+//to finish:
 vector<PrixJournalier> BourseVecteur::getHistoriqueParAction(string nom) const
 {
     vector<PrixJournalier> historiqueAction;
     return historiqueAction;
+}
+double BourseVecteur::movingAverage(string nom, int periode) const
+{
+    double m=0;
+    return m;
 }
 
 //Bourse Vecteur Optimisée
@@ -187,7 +193,7 @@ vector<string> BourseVecteurOptimisee::getActionsDisponibleParDateParPrix(Date d
     }
     return actionDispo;
 };
-
+//fix warning here (return only inside if)
 PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
 {
     PrixJournalier pjRecent;
@@ -216,6 +222,30 @@ vector<PrixJournalier> BourseVecteurOptimisee::getHistoriqueParAction(string nom
         i++;
     }
     return historiqueAction;
+}
+double BourseVecteurOptimisee::movingAverage(string nom, int periode) const
+{
+    vector<PrixJournalier> historiqueAction=getHistoriqueParAction(nom);
+    double m=0;
+//    vector<PrixJournalier>:: iterator i=historiqueAction.end();
+//    i--;
+//    PrixJournalier value=*i;
+    if (periode>historiqueAction.size())
+        periode=historiqueAction.size();
+//        cout<<historiqueAction.size()-periode<<endl;
+//        int nb=historiqueAction.size()-periode;
+//        cout<<historiqueAction[nb].getDate();
+    for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
+    {
+        m+=historiqueAction[i].getPrix();
+        //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
+    }
+    //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
+    m+=historiqueAction[historiqueAction.size()-periode].getPrix();
+    m=m/periode;
+    //cout<<m;
+
+    return m;
 }
 
 //Test Bourse Vecteur:
@@ -286,3 +316,5 @@ void TestBourseVecteur::getPrixJournalierParDate_DateNonExistante()
     else
         cout<<"Echec de getPrixJournalierParDate pour une date non existante"<<endl;
 }
+
+

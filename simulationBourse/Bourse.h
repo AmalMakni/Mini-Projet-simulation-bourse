@@ -24,6 +24,7 @@ class Bourse{
         virtual vector<PrixJournalier> getHistoriqueParAction(string nom) const=0;
         virtual Date getDateAujourdhui() const {return dateAujourdhui;};
         //virtual PrixJournalier getPrixParDateParNom()
+        virtual double movingAverage(string nom, int periode) const=0;
 };
 
 class BourseVecteur : public Bourse {
@@ -40,6 +41,7 @@ class BourseVecteur : public Bourse {
         vector<string> getActionsDisponibleParDateParPrix(Date, double) const;
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
+        double movingAverage(string nom, int periode) const;
 };
 
 class BourseVecteurOptimisee : public Bourse {
@@ -56,6 +58,7 @@ class BourseVecteurOptimisee : public Bourse {
         vector<string> getActionsDisponibleParDateParPrix(Date, double) const;
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
+        double movingAverage(string nom, int periode) const;
 };
 
 class TestBourseVecteur

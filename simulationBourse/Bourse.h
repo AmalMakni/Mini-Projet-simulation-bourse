@@ -4,6 +4,7 @@
 #include <iostream>
 #include "date.h"
 #include <vector>
+#include <set>
 #include "PrixJournalier.h"
 
 class Bourse{
@@ -24,7 +25,7 @@ class Bourse{
         virtual vector<PrixJournalier> getHistoriqueParAction(string nom) const=0;
         virtual Date getDateAujourdhui() const {return dateAujourdhui;};
         //virtual PrixJournalier getPrixParDateParNom()
-        virtual double movingAverage(string nom, int periode) const=0;
+        virtual double movingAverage(string nom, unsigned int periode) const=0;
 };
 
 class BourseVecteur : public Bourse {
@@ -41,7 +42,7 @@ class BourseVecteur : public Bourse {
         vector<string> getActionsDisponibleParDateParPrix(Date, double) const;
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
-        double movingAverage(string nom, int periode) const;
+        double movingAverage(string nom, unsigned int periode) const;
 };
 
 class BourseVecteurOptimisee : public Bourse {
@@ -58,9 +59,25 @@ class BourseVecteurOptimisee : public Bourse {
         vector<string> getActionsDisponibleParDateParPrix(Date, double) const;
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
-        double movingAverage(string nom, int periode) const;
+        double movingAverage(string nom, unsigned int periode) const;
 };
 
+class BourseMultiSet : public Bourse {
+    private :
+         multiset <PrixJournalier> historique  ;
+    public :
+        BourseMultiSet (Date date , vector<PrixJournalier> pj);
+        void setDateAujourdhui(Date);
+        vector<string> getActionsDisponibleParDate(Date) const;
+        vector<PrixJournalier> getPrixJournalierParDate(Date) const;
+        vector<string> getActionsDisponibleAujourdhui() const;
+        vector<PrixJournalier> getPrixJournalierAujourdhui() const;
+        vector<PrixJournalier> getPrixJournalierParDateParPrix(Date, double) const;
+        vector<string> getActionsDisponibleParDateParPrix(Date, double) const;
+        PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
+        vector<PrixJournalier> getHistoriqueParAction(string nom) const;
+        double movingAverage(string nom, unsigned int periode) const;
+};
 class TestBourseVecteur
 {
     public:

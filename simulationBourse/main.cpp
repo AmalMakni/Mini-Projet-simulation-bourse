@@ -166,29 +166,47 @@ using namespace std;
 //    return 0;
 //}
 
-//TEST SIMULATION
+//TEST BOURSEMULTISET:
 int main()
 {
-    //srand(time(NULL));
-    srand(1);
+    Date d1(2,12,2015), d2(17,12,2015), d3(1,12,2015);
     PersistancePrixJournaliers p;
-    TraderAleatoir2 trader2;
-    TraderAleatoir1 trader;
-    TraderMovingAverage2 trader3;
-    TraderMovingAverage trader4;
-    Date d1(2,12,2015), d2(20,12,2015);
-
     vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
     ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
-    BourseVecteurOptimisee b2(d1,v);
-//    vector<PrixJournalier> historiqueAction=b2.getHistoriqueParAction("NKE");
-//    for(auto pj: historiqueAction)
-//    {
-//        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
-//    }
-    BourseVecteur b1(d1,v);
-    //Portefeuille porte(100);
-    auto stats = Simulation::executer(b2, trader4, d1, d2, 10000);
-    for(auto it:stats){   cout<<it.first<<"\t"<<it.second<<endl;}
-    //double m=b2.movingAverage("JEC", 3);
+    BourseMultiSet b(d1, v);
+//    vector<string> actionDispo=b.getActionsDisponibleParDateParPrix(d1, 100);
+//    vector < PrixJournalier> prix = b.getPrixJournalierParDateParPrix(d1,100);
+//    for(auto s: actionDispo)
+//        //cout<<s.getDate()<<","<< s.getPrix()<<"; ";
+//        cout<<s<<"; ";
+    PrixJournalier t=b.getPrixJournalierLePlusRecent("JPM", d3);
+    cout<<t.getNom()<<","<<t.getDate()<<","<<t.getPrix();
+    return 0;
 }
+
+//TEST SIMULATION
+//int main()
+//{
+//    //srand(time(NULL));
+//    srand(1);
+//    PersistancePrixJournaliers p;
+//    TraderAleatoir2 trader2;
+//    TraderAleatoir1 trader;
+//    TraderMovingAverage2 trader3;
+//    TraderMovingAverage trader4;
+//    Date d1(2,12,2015), d2(17,12,2015);
+//
+//    vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
+//    ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
+//    BourseVecteurOptimisee b2(d1,v);
+////    vector<PrixJournalier> historiqueAction=b2.getHistoriqueParAction("NKE");
+////    for(auto pj: historiqueAction)
+////    {
+////        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
+////    }
+//    BourseVecteur b1(d1,v);
+//    //Portefeuille porte(100);
+//    auto stats = Simulation::executer(b2, trader2, d1, d2, 1000);
+//    for(auto it:stats){   cout<<it.first<<"\t"<<it.second<<endl;}
+//    //double m=b2.movingAverage("JEC", 3);
+//}

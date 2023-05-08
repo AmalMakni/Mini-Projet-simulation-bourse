@@ -10,10 +10,13 @@ class PrixJournalier
         string nomAction;
         double prix;
     public:
+        PrixJournalier(){};
+        PrixJournalier(Date d, string nom  , double p) : date(d), nomAction(nom), prix(p) {};
         Date getDate() const;
         string getNom() const;
         double getPrix() const;
         friend istream& operator>>(istream& flux, PrixJournalier& pj);
+        bool operator<(PrixJournalier p)const {return (date<p.date);};
 
 };
 

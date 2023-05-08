@@ -98,7 +98,7 @@ vector<PrixJournalier> BourseVecteur::getHistoriqueParAction(string nom) const
     vector<PrixJournalier> historiqueAction;
     return historiqueAction;
 }
-double BourseVecteur::movingAverage(string nom, int periode) const
+double BourseVecteur::movingAverage(string nom, unsigned int periode) const
 {
     double m=0;
     return m;
@@ -223,7 +223,7 @@ vector<PrixJournalier> BourseVecteurOptimisee::getHistoriqueParAction(string nom
     }
     return historiqueAction;
 }
-double BourseVecteurOptimisee::movingAverage(string nom, int periode) const
+double BourseVecteurOptimisee::movingAverage(string nom, unsigned int periode) const
 {
     vector<PrixJournalier> historiqueAction=getHistoriqueParAction(nom);
     double m=0;
@@ -248,6 +248,198 @@ double BourseVecteurOptimisee::movingAverage(string nom, int periode) const
     return m;
 }
 
+// BourseMultiSet :
+BourseMultiSet::BourseMultiSet(Date date , vector<PrixJournalier> pj) : Bourse(date)
+{
+    multiset <PrixJournalier> H ;
+    for (auto p: pj)
+    {
+        H.insert(p);
+    }
+    historique=H ;
+}
+
+vector<string> BourseMultiSet::getActionsDisponibleParDate(Date d) const
+{
+    vector<string > actionDispo;
+  //cout<<(!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))<<endl;
+//  if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+//  {
+//        unsigned int i=0;
+//        while(historique[i].getDate()<d && i<historique.size())
+//            i++;
+//        while(historique[i].getDate()==d && i<historique.size())
+//        {
+//            ActionDispo.push_back(historique[i].getNom());
+//            i++;
+//        }
+//    }
+    PrixJournalier pj(d,"", 0);
+    multiset<PrixJournalier> :: iterator pos=historique.lower_bound(pj);
+    while (pos!=historique.end() && pos->getDate()== d)
+    {
+        actionDispo.push_back(pos->getNom());
+        pos++;
+    }
+  return actionDispo;
+
+}
+
+vector<PrixJournalier> BourseMultiSet::getPrixJournalierParDate(Date d) const
+{
+    vector <PrixJournalier> prix;
+//    if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+//    {
+//        unsigned int i=0;
+//        while(historique[i].getDate()<d && i<historique.size())
+//            i++;
+//        while(historique[i].getDate()==d && i<historique.size())
+//        {
+//            prix.push_back(historique[i]);
+//            i++;
+//        }
+    //}
+    PrixJournalier pj(d,"", 0);
+    multiset<PrixJournalier> :: iterator pos=historique.lower_bound(pj);
+    while (pos!=historique.end() && pos->getDate()== d)
+    {
+        prix.push_back(*pos);
+        pos++;
+    }
+    return prix;
+}
+
+
+vector<string> BourseMultiSet::getActionsDisponibleAujourdhui() const
+{
+    return getActionsDisponibleParDate(dateAujourdhui);
+}
+vector<PrixJournalier> BourseMultiSet::getPrixJournalierAujourdhui() const
+{
+    return getPrixJournalierParDate(dateAujourdhui);
+}
+void BourseMultiSet::setDateAujourdhui(Date d)
+{
+    dateAujourdhui=d;
+}
+vector<PrixJournalier> BourseMultiSet::getPrixJournalierParDateParPrix(Date d, double budget) const
+{
+    vector <PrixJournalier> prix;
+//    if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+//    {
+//        unsigned int i=0;
+//        while(historique[i].getDate()<d && i<historique.size())
+//            i++;
+//        while(historique[i].getDate()==d && i<historique.size())
+//        {
+//            if (historique[i].getPrix()<=budget)
+//                prix.push_back(historique[i]);
+//            i++;
+//        }
+//    }
+    PrixJournalier pj(d,"", 0);
+    multiset<PrixJournalier> :: iterator pos=historique.lower_bound(pj);
+    while (pos!=historique.end() && pos->getDate()== d)
+    {
+        if (pos->getPrix()<= budget )
+        {
+            //cout<<pos->getDate()<<", ";
+            prix.push_back(*pos);
+        }
+        pos++;
+
+    }
+
+    return prix;
+}
+vector<string> BourseMultiSet::getActionsDisponibleParDateParPrix(Date d, double budget) const
+{
+  vector<string> actionDispo;
+  //cout<<(!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))<<endl;
+//  if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+//  {
+//        unsigned int i=0;
+//        while(historique[i].getDate()<d && i<historique.size())
+//            i++;
+//        while(historique[i].getDate()==d && i<historique.size())
+//        {
+//            if (historique[i].getPrix()<=budget)
+//                actionDispo.push_back(historique[i].getNom());
+//            i++;
+//        }
+//    }
+    PrixJournalier pj(d,"", 0);
+    multiset<PrixJournalier> :: iterator pos=historique.lower_bound(pj);
+    while (pos!=historique.end() && pos->getDate()== d)
+    {
+        if (pos->getPrix()<= budget )
+        {
+            //cout<<pos->getDate()<<", ";
+            actionDispo.push_back(pos->getNom());
+        }
+        pos++;
+
+    }
+    return actionDispo;
+};
+//fix warning here (return only inside if)
+PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
+{
+
+    PrixJournalier pjRecent;
+
+//    unsigned int i=0;
+    if (!(dateAujourdhui<dateFin))
+    {
+        dateFin.incrementerDate();
+        //PrixJournalier pj(dateFin, "", 0);
+        multiset<PrixJournalier>:: iterator it=historique.begin();
+        while(it->getDate()<dateFin && it!=historique.end())
+        {
+            if (it->getNom()==nom)
+                pjRecent=*it;
+            it++;
+        }
+        return pjRecent;
+    }
+
+};
+vector<PrixJournalier> BourseMultiSet::getHistoriqueParAction(string nom) const
+{
+    vector<PrixJournalier> historiqueAction;
+    multiset<PrixJournalier>:: iterator it=historique.begin();
+    while(it->getDate()<dateAujourdhui && it!=historique.end())
+    {
+        if (it->getNom()==nom)
+            historiqueAction.push_back(*it);
+        it++;
+    }
+    return historiqueAction;
+}
+double BourseMultiSet::movingAverage(string nom, unsigned int periode) const
+{
+    vector<PrixJournalier> historiqueAction=getHistoriqueParAction(nom);
+    double m=0;
+//    vector<PrixJournalier>:: iterator i=historiqueAction.end();
+//    i--;
+//    PrixJournalier value=*i;
+    if (periode>historiqueAction.size())
+        periode=historiqueAction.size();
+//        cout<<historiqueAction.size()-periode<<endl;
+//        int nb=historiqueAction.size()-periode;
+//        cout<<historiqueAction[nb].getDate();
+    for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
+    {
+        m+=historiqueAction[i].getPrix();
+        //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
+    }
+    //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
+    m+=historiqueAction[historiqueAction.size()-periode].getPrix();
+    m=m/periode;
+    //cout<<m;
+
+    return m;
+}
 //Test Bourse Vecteur:
 
 void TestBourseVecteur::getActionsDisponibleParDate_DateExistante()

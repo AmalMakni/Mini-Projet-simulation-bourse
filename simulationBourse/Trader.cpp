@@ -303,7 +303,7 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
         {
             //vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(titres[i].getNomAction());
             double m=bourse.movingAverage(titres[i].getNomAction(), 200);
-            cout<<titres[i].getNomAction()<<": "<<m<<endl;
+            cout<<titres[i].getNomAction()<<" moving average: "<<m<<endl;
             PrixJournalier pjAujourdhui=bourse.getPrixJournalierLePlusRecent(titres[i].getNomAction(), bourse.getDateAujourdhui());
             cout<<pjAujourdhui.getNom()<<","<<pjAujourdhui.getPrix()<<","<<pjAujourdhui.getDate()<<endl;
             if(pjAujourdhui.getDate()==bourse.getDateAujourdhui() && pjAujourdhui.getPrix()<m)
@@ -336,7 +336,7 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
         {
             int qte=floor(portefeuille.getSolde()/pjDispo[maximum].getPrix());
             Transaction tx(achat, pjDispo[maximum].getNom(), qte);
-            cout<<"achat: "<<bourse.getDateAujourdhui()<<endl;
+            cout<<"achat: "<<bourse.getDateAujourdhui()<<", MovingAaverage: "<<movingAverages[maximum]<<endl;
             return tx;
         }
     }

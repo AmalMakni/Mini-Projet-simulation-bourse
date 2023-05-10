@@ -26,7 +26,7 @@
 	<sstream>
 	"date.h"
 
-1683574300 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
+1683719240 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
 	<iostream>
 	<vector>
 	<fstream>
@@ -85,7 +85,7 @@
 	"Titre.h"
 	<vector>
 
-1683548251 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
+1683728529 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
 	<stdlib.h>
 	<iostream>
 	<vector>
@@ -101,7 +101,7 @@
 	"Bourse.h"
 	"Portefeuille.h"
 
-1683151410 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
+1683728480 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
 	<iostream>
 	<chrono>
 	<map>

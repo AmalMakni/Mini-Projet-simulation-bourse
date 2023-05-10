@@ -442,7 +442,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                 {
                      nbRien++;
                      stats["nonmbre de transactions de type rien: "]++;
-                     //cout<<"rien"<<endl;
+                     cout<<"rien"<<endl;
                 }
                 i++;
 

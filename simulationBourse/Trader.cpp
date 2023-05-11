@@ -295,21 +295,21 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
     vector<Titre> titres=portefeuille.getTitres();
     if (titres.size()!=0)
     {
-        cout<<"vente consideree"<<endl;
+        //cout<<"vente consideree"<<endl;
         //bool vendre=false;
         unsigned int i=0;
         //while(!vendre && i<titres.size())
         while(i<titres.size())
         {
             //vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(titres[i].getNomAction());
-            double m=bourse.movingAverage(titres[i].getNomAction(), 200);
-            cout<<titres[i].getNomAction()<<" moving average: "<<m<<endl;
+            double m=bourse.movingAverage(titres[i].getNomAction(), 3);
+            //cout<<titres[i].getNomAction()<<" moving average: "<<m<<endl;
             PrixJournalier pjAujourdhui=bourse.getPrixJournalierLePlusRecent(titres[i].getNomAction(), bourse.getDateAujourdhui());
-            cout<<pjAujourdhui.getNom()<<","<<pjAujourdhui.getPrix()<<","<<pjAujourdhui.getDate()<<endl;
+            //cout<<pjAujourdhui.getNom()<<","<<pjAujourdhui.getPrix()<<","<<pjAujourdhui.getDate()<<endl;
             if(pjAujourdhui.getDate()==bourse.getDateAujourdhui() && pjAujourdhui.getPrix()<m)
             {
                 Transaction tx(vente ,titres[i].getNomAction(), titres[i].getQuantite());
-                cout<<"Vente: "<<bourse.getDateAujourdhui()<<endl;
+                //cout<<titres[i].getNomAction()<<"/moy: "<< m<<"/ pj Auj"<<pjAujourdhui.getPrix()<<"Vente: "<<bourse.getDateAujourdhui()<<endl;
                 return tx;
             }
             i++;
@@ -322,7 +322,7 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
         for (auto pj: pjDispo)
         {
             //vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(pj.getNom());
-            double m=bourse.movingAverage(pj.getNom(), 200);
+            double m=bourse.movingAverage(pj.getNom(), 3);
             movingAverages.push_back(pj.getPrix()-m);
         }
         unsigned int j=0;
@@ -336,7 +336,7 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
         {
             int qte=floor(portefeuille.getSolde()/pjDispo[maximum].getPrix());
             Transaction tx(achat, pjDispo[maximum].getNom(), qte);
-            cout<<"achat: "<<bourse.getDateAujourdhui()<<", MovingAaverage: "<<movingAverages[maximum]<<endl;
+            //cout<<"achat: "<<bourse.getDateAujourdhui()<<", MovingAaverage difference: "<<movingAverages[maximum]<<", nom: "<<pjDispo[maximum].getNom() <<endl;
             return tx;
         }
     }
@@ -344,4 +344,9 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
     return tx;
 
 
+};
+
+Transaction TraderComparaison::choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille)
+{
+    vector<Titre> titres=portefeuille.getTitres();
 };

@@ -184,6 +184,12 @@ using namespace std;
 //    return 0;
 //}
 
+//TESTBOURSE MULTIMAP
+//int main()
+//{
+//    return 0;
+//}
+
 //TEST SIMULATION
 int main()
 {
@@ -194,7 +200,8 @@ int main()
     TraderAleatoir1 trader;
     TraderMovingAverage2 trader3;
     TraderMovingAverage trader4;
-    Date d1(2,12,2015), d2(17,12,2015);
+    //Date d1(2,12,2015), d2(20,12,2016);
+    Date d1(1,12,2015), d2(5,12,2015);
 
     vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
     ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
@@ -204,10 +211,12 @@ int main()
 //    {
 //        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
 //    }
+//    cout<<"***"<<endl;
     BourseVecteur b1(d1,v);
     BourseMultiSet b3(d1, v);
+    BourseMultiMap b4(d1, v);
     //Portefeuille porte(100);
-    auto stats = Simulation::executer(b3, trader3, d1, d2, 1000);
+    auto stats = Simulation::executer(b2, trader3, d1, d2, 100);
     for(auto it:stats){cout<<it.first<<"\t"<<it.second<<endl;}
     //double m=b2.movingAverage("JEC", 3);
 }

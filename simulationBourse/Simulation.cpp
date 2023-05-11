@@ -365,6 +365,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
         vector<PrixJournalier> pjDispo=b.getPrixJournalierAujourdhui();
         auto stop = chrono::high_resolution_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+        //auto duration = chrono::duration_cast<chrono::nanoseconds>(stop - start);
         stats["TEMPS_GET_ACTIONS_DISPO_AUJ_MICROs"]+=duration.count();
         stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"]++;
         int i=0;
@@ -382,8 +383,8 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                 //cout<<portefeuille.getSolde()<<endl;
                 if(transaction.getType()==achat)
                 {
-                    cout<<"nom action a acheter: "<<transaction.getNomAction()<<" /qte action a acheter:"<<transaction.getQuantite()<<" /Type: "<<transaction.getType()<<" /solde: "<<portefeuille.getSolde()
-                    <<endl;
+//                    cout<<"nom action a acheter: "<<transaction.getNomAction()<<" /qte action a acheter:"<<transaction.getQuantite()<<" /Type: "<<transaction.getType()<<" /solde: "<<portefeuille.getSolde()
+//                    <<endl;
                     j=0;
                     k=0;
                     while ( j<pjDispo.size() && pjDispo[j].getNom()!=transaction.getNomAction())
@@ -395,8 +396,8 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                             portefeuille.acheterAction(transaction.getNomAction(), transaction.getQuantite(), pjDispo[j].getPrix());
                             nbAchat++;
                             stats["nonmbre d'achats (valides): "]++;
-                            cout<<"nom action a acheter: "<<transaction.getNomAction()<<" action trouvee: "<<pjDispo[j].getNom()<<" Prix trouve: "
-                            <<pjDispo[j].getPrix()<<endl;
+//                            cout<<"nom action a acheter: "<<transaction.getNomAction()<<" action trouvee: "<<pjDispo[j].getNom()<<" Prix trouve: "
+//                            <<pjDispo[j].getPrix()<<endl;
                         }
                     else
                         {

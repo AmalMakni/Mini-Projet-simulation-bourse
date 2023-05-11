@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1683756102 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
+1683842683 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
 	<iostream>
 	"date.h"
 	<vector>
@@ -27,7 +27,7 @@
 	<sstream>
 	"date.h"
 
-1683756331 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
+1683844456 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
 	<iostream>
 	<vector>
 	<fstream>
@@ -86,7 +86,7 @@
 	"Titre.h"
 	<vector>
 
-1683728529 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
+1683846757 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
 	<stdlib.h>
 	<iostream>
 	<vector>
@@ -97,12 +97,12 @@
 	"Portefeuille.h"
 	"Titre.h"
 
-1683450359 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.h
+1683845914 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.h
 	"Transaction.h"
 	"Bourse.h"
 	"Portefeuille.h"
 
-1683728480 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
+1683844498 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
 	<iostream>
 	<chrono>
 	<map>

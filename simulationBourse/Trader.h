@@ -33,4 +33,10 @@ class TraderMovingAverage2: public Trader
     public:
         Transaction choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille);
 };
+
+class TraderComparaison: public Trader
+{
+    public:
+        Transaction choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille);
+};
 #endif // TRADER_H_INCLUDED

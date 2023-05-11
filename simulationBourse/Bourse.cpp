@@ -404,6 +404,7 @@ PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecent(string nom, Date da
     }
 
 };
+//parcours sequentiel d'un set (arbre, non contigu) prend beaucoup plus de temps que le parcours sequentiel d'un vecteur (contigu)
 vector<PrixJournalier> BourseMultiSet::getHistoriqueParAction(string nom) const
 {
     vector<PrixJournalier> historiqueAction;
@@ -428,13 +429,164 @@ double BourseMultiSet::movingAverage(string nom, unsigned int periode) const
 //        cout<<historiqueAction.size()-periode<<endl;
 //        int nb=historiqueAction.size()-periode;
 //        cout<<historiqueAction[nb].getDate();
-    for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
+
+    for (vector<PrixJournalier>:: iterator i=historiqueAction.end()-1; i>historiqueAction.end()-periode; i--)
     {
-        m+=historiqueAction[i].getPrix();
+        //m+=historiqueAction[i].getPrix();
+        m+=i->getPrix();
         //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
     }
     //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
-    m+=historiqueAction[historiqueAction.size()-periode].getPrix();
+    //m+=historiqueAction[historiqueAction.size()-periode].getPrix();
+    vector<PrixJournalier>:: iterator i=historiqueAction.end()-periode;
+    m+=i->getPrix();
+    m=m/periode;
+    //cout<<m;
+
+    return m;
+}
+// BourseMultiMap :
+BourseMultiMap::BourseMultiMap(Date date , vector<PrixJournalier> & pj) : Bourse(date)
+{
+    multimap <Date, PrixJournalier> H ;
+    for (auto p: pj)
+    {
+        H.insert({p.getDate() ,p});
+    }
+    historique=H ;
+}
+
+vector<string> BourseMultiMap::getActionsDisponibleParDate(Date d) const
+{
+    vector<string > actionDispo;
+    if (dateAujourdhui<d)
+        return actionDispo;
+    PrixJournalier pj(d,"", 0);
+    auto  pos=historique.lower_bound(pj.getDate());
+    while (pos->first==d && pos!=historique.end())
+    {
+        actionDispo.push_back((pos->second).getNom());
+        pos++;
+    }
+  return actionDispo;
+
+}
+
+vector<PrixJournalier> BourseMultiMap::getPrixJournalierParDate(Date d) const
+{
+    vector <PrixJournalier> prix;
+    if (dateAujourdhui<d)
+        return prix;
+    PrixJournalier pj(d,"", 0);
+    auto  pos=historique.lower_bound(pj.getDate());
+    while (pos->first==d && pos!=historique.end())
+    {
+        prix.push_back(pos->second);
+        pos++;
+    }
+    return prix;
+}
+
+
+vector<string> BourseMultiMap::getActionsDisponibleAujourdhui() const
+{
+    return getActionsDisponibleParDate(dateAujourdhui);
+}
+vector<PrixJournalier> BourseMultiMap::getPrixJournalierAujourdhui() const
+{
+    return getPrixJournalierParDate(dateAujourdhui);
+}
+void BourseMultiMap::setDateAujourdhui(Date d)
+{
+    dateAujourdhui=d;
+}
+vector<PrixJournalier> BourseMultiMap::getPrixJournalierParDateParPrix(Date d, double budget) const
+{
+    vector <PrixJournalier> prix;
+    if (dateAujourdhui<d)
+        return prix;
+    PrixJournalier pj(d,"", 0);
+    auto pos=historique.lower_bound(d);
+    while (pos->first==d && pos!=historique.end())
+    {
+        if ((pos->second).getPrix()<= budget )
+        {
+            //cout<<pos->getDate()<<", ";
+            prix.push_back(pos->second);
+        }
+        pos++;
+
+    }
+
+    return prix;
+}
+vector<string> BourseMultiMap::getActionsDisponibleParDateParPrix(Date d, double budget) const
+{
+    vector<string> actionDispo;
+    PrixJournalier pj(d,"", 0);
+    auto pos=historique.lower_bound(pj.getDate());
+    while (pos->first==d && pos!=historique.end())
+    {
+        if (pos->second.getPrix()<= budget )
+        {
+            //cout<<pos->getDate()<<", ";
+            actionDispo.push_back(pos->second.getNom());
+        }
+        pos++;
+
+    }
+    return actionDispo;
+};
+//fix warning here (return only inside if)
+PrixJournalier BourseMultiMap::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
+{
+
+    PrixJournalier pjRecent;
+
+//    unsigned int i=0;
+    if (!(dateAujourdhui<dateFin))
+    {
+        dateFin.incrementerDate();
+        //PrixJournalier pj(dateFin, "", 0);
+        auto it=historique.begin();
+        while(it->second.getDate()<dateFin && it!=historique.end())
+        {
+            if (it->second.getNom()==nom)
+                pjRecent=it->second;
+            it++;
+        }
+        return pjRecent;
+    }
+
+};
+//parcours sequentiel d'un set (arbre, non contigu) prend beaucoup plus de temps que le parcours sequentiel d'un vecteur (contigu)
+vector<PrixJournalier> BourseMultiMap::getHistoriqueParAction(string nom) const
+{
+    vector<PrixJournalier> historiqueAction;
+    auto it=historique.begin();
+    while(it->first<dateAujourdhui && it!=historique.end())
+    {
+        if (it->second.getNom()==nom)
+            historiqueAction.push_back(it->second);
+        it++;
+    }
+    return historiqueAction;
+}
+double BourseMultiMap::movingAverage(string nom, unsigned int periode) const
+{
+    vector<PrixJournalier> historiqueAction=getHistoriqueParAction(nom);
+    double m=0;
+    if (periode>historiqueAction.size())
+        periode=historiqueAction.size();
+    for (vector<PrixJournalier>:: iterator i=historiqueAction.end()-1; i>historiqueAction.end()-periode; i--)
+    {
+        m+=i->getPrix();
+        //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
+    }
+    //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
+    //m+=historiqueAction[historiqueAction.size()-periode].getPrix();
+    vector<PrixJournalier>:: iterator i=historiqueAction.end()-periode;
+    m+=i->getPrix();
     m=m/periode;
     //cout<<m;
 

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1683578057 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
+1683756102 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
 	<iostream>
 	"date.h"
 	<vector>
@@ -10,11 +10,12 @@
 1682281731 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.h
 	<iostream>
 
-1683550238 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.h
+1683801442 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.h
 	<iostream>
 	"date.h"
 	<vector>
 	<set>
+	<map>
 	"PrixJournalier.h"
 
 1683555689 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\prixjournalier.h
@@ -26,7 +27,7 @@
 	<sstream>
 	"date.h"
 
-1683719240 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
+1683756331 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
 	<iostream>
 	<vector>
 	<fstream>

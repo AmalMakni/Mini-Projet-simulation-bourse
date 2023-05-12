@@ -82,14 +82,36 @@ vector<string> BourseVecteur::getActionsDisponibleParDateParPrix(Date d, double 
 };
 PrixJournalier BourseVecteur::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
 {
-    PrixJournalier pjRecent;
-    unsigned int i=0;
-    while(i<historique.size())
+    PrixJournalier pjRecent(dateFin,"",-1);
+    if(!(dateAujourdhui<dateFin))
     {
-        if (historique[i].getNom()==nom && historique[i].getDate()<dateFin)
-            pjRecent=historique[i];
-        i++;
+        dateFin.incrementerDate();
+        unsigned int i=0;
+        while(i<historique.size())
+        {
+            if (historique[i].getNom()==nom && historique[i].getDate()<dateFin)
+                pjRecent=historique[i];
+            i++;
+        }
     }
+
+    return pjRecent;
+};
+PrixJournalier BourseVecteur::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
+{
+    PrixJournalier pjRecent(dateFin,"",-1);
+    if(!(dateAujourdhui<dateFin))
+    {
+        //dateFin.incrementerDate();
+        unsigned int i=0;
+        while(i<historique.size())
+        {
+            if (historique[i].getNom()==nom && historique[i].getDate()<dateFin)
+                pjRecent=historique[i];
+            i++;
+        }
+    }
+
     return pjRecent;
 };
 //to finish:
@@ -111,10 +133,10 @@ BourseVecteurOptimisee::BourseVecteurOptimisee(Date date , vector<PrixJournalier
 
 vector<string> BourseVecteurOptimisee::getActionsDisponibleParDate(Date d) const
 {
-  vector<string> ActionDispo;
-  //cout<<(!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))<<endl;
-  if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
-  {
+    vector<string> ActionDispo;
+    //cout<<(!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))<<endl;
+    if (!(dateAujourdhui<d) && !(historique[historique.size()-1].getDate()<d)&& !(d<historique[0].getDate()))
+    {
         unsigned int i=0;
         while(historique[i].getDate()<d && i<historique.size())
             i++;
@@ -124,7 +146,7 @@ vector<string> BourseVecteurOptimisee::getActionsDisponibleParDate(Date d) const
             i++;
         }
     }
-  return ActionDispo;
+    return ActionDispo;
 
 }
 
@@ -201,6 +223,23 @@ PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecent(string nom,
     if (!(dateAujourdhui<dateFin))
     {
         dateFin.incrementerDate();
+        while(historique[i].getDate()<dateFin && i<historique.size())
+        {
+            if (historique[i].getNom()==nom)
+                pjRecent=historique[i];
+            i++;
+        }
+        return pjRecent;
+    }
+
+};
+PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
+{
+    PrixJournalier pjRecent;
+    unsigned int i=0;
+    if (!(dateAujourdhui<dateFin))
+    {
+        //dateFin.incrementerDate();
         while(historique[i].getDate()<dateFin && i<historique.size())
         {
             if (historique[i].getNom()==nom)
@@ -366,6 +405,27 @@ PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecent(string nom, Date da
     }
 
 };
+PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
+{
+
+    PrixJournalier pjRecent;
+
+//    unsigned int i=0;
+    if (!(dateAujourdhui<dateFin))
+    {
+        //dateFin.incrementerDate();
+        //PrixJournalier pj(dateFin, "", 0);
+        multiset<PrixJournalier>:: iterator it=historique.begin();
+        while(it->getDate()<dateFin && it!=historique.end())
+        {
+            if (it->getNom()==nom)
+                pjRecent=*it;
+            it++;
+        }
+        return pjRecent;
+    }
+
+};
 //parcours sequentiel d'un set (arbre, non contigu) prend beaucoup plus de temps que le parcours sequentiel d'un vecteur (contigu)
 vector<PrixJournalier> BourseMultiSet::getHistoriqueParAction(string nom) const
 {
@@ -519,6 +579,28 @@ PrixJournalier BourseMultiMap::getPrixJournalierLePlusRecent(string nom, Date da
         }
         return pjRecent;
     }
+
+};
+PrixJournalier BourseMultiMap::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
+{
+
+    PrixJournalier pjRecent;
+
+//    unsigned int i=0;
+    if (!(dateAujourdhui<dateFin))
+    {
+        //dateFin.incrementerDate();
+        //PrixJournalier pj(dateFin, "", 0);
+        auto it=historique.begin();
+        while(it->second.getDate()<dateFin && it!=historique.end())
+        {
+            if (it->second.getNom()==nom)
+                pjRecent=it->second;
+            it++;
+        }
+        return pjRecent;
+    }
+    //return pjRecent;
 
 };
 //parcours sequentiel d'un set (arbre, non contigu) prend beaucoup plus de temps que le parcours sequentiel d'un vecteur (contigu)

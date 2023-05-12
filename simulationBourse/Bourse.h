@@ -27,6 +27,7 @@ class Bourse{
         virtual Date getDateAujourdhui() const {return dateAujourdhui;};
         //virtual PrixJournalier getPrixParDateParNom()
         virtual double movingAverage(string nom, unsigned int periode) const=0;
+        virtual PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const=0;
 };
 
 class BourseVecteur : public Bourse {
@@ -44,6 +45,7 @@ class BourseVecteur : public Bourse {
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
+        PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
 };
 
 class BourseVecteurOptimisee : public Bourse {
@@ -61,6 +63,7 @@ class BourseVecteurOptimisee : public Bourse {
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
+        PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
 };
 
 class BourseMultiSet : public Bourse {
@@ -78,6 +81,7 @@ class BourseMultiSet : public Bourse {
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
+        PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
 };
 
 class BourseMultiMap : public Bourse {
@@ -95,6 +99,7 @@ class BourseMultiMap : public Bourse {
         PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const;
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
+        PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
 };
 class TestBourseVecteur
 {

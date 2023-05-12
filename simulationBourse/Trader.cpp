@@ -349,4 +349,55 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
 Transaction TraderComparaison::choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille)
 {
     vector<Titre> titres=portefeuille.getTitres();
+    if(titres.size()>0)
+    {
+        for(auto t: titres)
+        {
+            PrixJournalier pjAujourdhui=bourse.getPrixJournalierLePlusRecent(t.getNomAction(), bourse.getDateAujourdhui());
+            if(pjAujourdhui.getDate()==bourse.getDateAujourdhui())
+            {
+                PrixJournalier pjHier=bourse.getPrixJournalierLePlusRecentV2(t.getNomAction(), bourse.getDateAujourdhui());
+                if (pjHier.getPrix()<pjAujourdhui.getPrix())
+                {
+                    Transaction tx(vente, t.getNomAction(), t.getQuantite());
+                    return tx;
+                }
+                //else
+//                int qte=floor(portefeuille.getSolde()/pjAujourdhui.getPrix());
+//                Transaction tx(achat, t.getNomAction(), t.getQuantite());
+//                return tx;
+            }
+        }
+    }
+    vector<PrixJournalier> pjDispo=bourse.getPrixJournalierAujourdhuiParPrix(portefeuille.getSolde());
+    if (pjDispo.size()>0)
+    {
+        vector<double> differenceAujourdhuiHier;
+        for (auto pj: pjDispo)
+        {
+            PrixJournalier pjHier=bourse.getPrixJournalierLePlusRecentV2(pj.getNom(), bourse.getDateAujourdhui());
+            differenceAujourdhuiHier.push_back(pjHier.getPrix()-pj.getPrix());
+        }
+        unsigned int j=0;
+        unsigned int maximum=0;
+        for (j=0;j<differenceAujourdhuiHier.size(); j++)
+        {
+            if(differenceAujourdhuiHier[j]>differenceAujourdhuiHier[maximum])
+                maximum=j;
+        }
+        if (differenceAujourdhuiHier[maximum]>0)
+        {
+            int qte=floor(portefeuille.getSolde()/pjDispo[maximum].getPrix());
+            Transaction tx(achat, pjDispo[maximum].getNom(), qte);
+            //cout<<"achat: "<<bourse.getDateAujourdhui()<<", MovingAaverage difference: "<<movingAverages[maximum]<<", nom: "<<pjDispo[maximum].getNom() <<endl;
+            return tx;
+        }
+    }
+
+    Transaction tx(rien, "", 0);
+    return tx;
+
+
+
+
 };

@@ -13,6 +13,7 @@
 #include "Portefeuille.h"
 #include "Trader.h"
 #include "Simulation.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -198,33 +199,146 @@ using namespace std;
 //}
 
 ////TEST SIMULATION
-int main()
-{
-    //srand(time(NULL));
-    srand(1);
-    PersistancePrixJournaliers p;
-    TraderAleatoir2 trader2;
-    TraderAleatoir1 trader;
-    TraderMovingAverage2 trader3;
-    TraderMovingAverage trader4;
-    TraderComparaison trader5;
-    Date d1(2,12,2015), d2(17,12,2015);
-    //Date d1(1,12,2015), d2(5,12,2015);
+//int main()
+//{
+//    //srand(time(NULL));
+//    srand(1);
+//    PersistancePrixJournaliers p;
+//    Trader * t;
+//    Bourse *b;
+//    t= new TraderAleatoir2;
+//    TraderAleatoir2 trader2;
+//    TraderAleatoir1 trader;
+//    TraderMovingAverage2 trader3;
+//    TraderMovingAverage trader4;
+//    TraderComparaison trader5;
+//
+//    Date d1(2,12,2015), d2(17,12,2015);
+//
+//    //Date d1(1,12,2015), d2(5,12,2015);
+//
+//    vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
+//    ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
+//    BourseVecteurOptimisee b2(d1,v);
+//    b= new BourseVecteurOptimisee(d1,v);
+////    vector<PrixJournalier> historiqueAction=b2.getHistoriqueParAction("NKE");
+////    for(auto pj: historiqueAction)
+////    {
+////        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
+////    }
+////    cout<<"***"<<endl;
+//    BourseVecteur b1(d1,v);
+//    BourseMultiSet b3(d1, v);
+//    BourseMultiMap b4(d1, v);
+//    //Portefeuille porte(100);
+//    //auto stats = Simulation::executer(b2, trader2, d1, d2, 100);
+//    auto stats = Simulation::executer(*b, *t, d1, d2, 100);
+//    for(auto it:stats){cout<<it.first<<"\t"<<it.second<<endl;}
+//    //double m=b2.movingAverage("JEC", 3);
+//}
+// test menu
+int main (){
 
+    Date datedebut ;
+    Date datefin ;
+    Menu menu ;
+    Bourse * b;
+    Trader * t;
+    double budget;
+    PersistancePrixJournaliers p;
     vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
-    ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
-    BourseVecteurOptimisee b2(d1,v);
-//    vector<PrixJournalier> historiqueAction=b2.getHistoriqueParAction("NKE");
-//    for(auto pj: historiqueAction)
-//    {
-//        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
-//    }
-//    cout<<"***"<<endl;
-    BourseVecteur b1(d1,v);
-    BourseMultiSet b3(d1, v);
-    BourseMultiMap b4(d1, v);
-    //Portefeuille porte(100);
-    auto stats = Simulation::executer(b3, trader4, d1, d2, 100);
-    for(auto it:stats){cout<<it.first<<"\t"<<it.second<<endl;}
-    //double m=b2.movingAverage("JEC", 3);
+   ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
+    int choix ;
+    do{
+            if((choix=menu.menuGeneral())<0)
+                exit(1);
+
+            switch (choix){
+                case 1:
+                    do {
+                        cout << " entrer votre date de debut sous la forme \"jj/mm/aaaa\" : ";
+                        string date;
+                        //cin >> datedebut;
+                        cin>>date;
+                        Date d1(date);
+                        datedebut=d1;
+                    }while(datedebut.dateValide()== false);
+                    cout << " saisie date check "  ;
+                    system("pause");
+                    break;
+                case 2:
+                    do {
+                        //cout<<datedebut<<endl;
+                        cout << " entrer votre date de fin sous la forme \"jj/mm/aaaa\" : ";
+                        //cin >> datefin ;
+                        string date;
+                        //cin >> datedebut;
+                        cin>>date;
+                        Date d1(date);
+                        datefin=d1;
+                        if(datefin<datedebut)
+                            cout<<"La date de debut est superieure a celle de fin. Veuillez reessayer."<<endl;
+                    }while(datefin.dateValide()== false || datefin<datedebut );
+                    cout << " case2  check " ;
+                    system("pause");
+                    break;
+                case 3:
+                    //menu.choixBourse(v,datedebut);
+                    choix=menu.menuBourse();
+                    switch(choix){
+                        case 1:
+                            b= new BourseVecteur(datedebut, v);
+                            break;
+                        case 2:
+                            b= new BourseMultiSet(datedebut, v);
+                            break;
+                        case 3:
+                            b= new BourseMultiMap(datedebut,v);
+                    }
+                    cout<<b->getDateAujourdhui();
+                    cout << " case3  check " ;
+                    system("pause");
+                    break;
+                case 4:
+                    choix=menu.menuTrader();
+                    switch(choix){
+                        case 1:
+                            t= new TraderAleatoir2;
+                            break;
+                        case 2:
+                            t= new TraderMovingAverage2;
+                            break;
+                        case 3:
+                            t= new TraderComparaison;
+                    }
+                    cout << " case3  check " ;
+                    system("pause");
+                    break ;
+                case 5:
+                    do{
+                        cout << "Saisir le budget de la simulation: " ;
+                        cin>>budget;
+                        if(budget<0)
+                            cout<<"Veuillez entrer un solde positif:";
+
+                    }while(budget<0);
+
+
+                    system("pause");
+                    break ;
+                case 6:
+                    srand(1);
+                    //cout << " case6  check " ;
+                    auto stats=Simulation::executer(*b, *t, datedebut, datefin, budget);
+                    for(auto it:stats){cout<<it.first<<"\t"<<it.second<<endl;}
+                    system("pause");
+                    break ;
+
+            }
+
+
+    }while(choix != 7);
+
+
+    return 0;
 }

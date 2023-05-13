@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1683966038 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
+1683966755 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
 	<iostream>
 	"date.h"
 	<vector>
@@ -10,7 +10,7 @@
 1683959860 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\date.h
 	<iostream>
 
-1683848178 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.h
+1683982125 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.h
 	<iostream>
 	"date.h"
 	<vector>
@@ -27,7 +27,7 @@
 	<sstream>
 	"date.h"
 
-1683966583 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
+1683984680 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
 	<iostream>
 	<vector>
 	<fstream>
@@ -42,6 +42,7 @@
 	"Portefeuille.h"
 	"Trader.h"
 	"Simulation.h"
+	"Menu.h"
 
 1682590324 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\persistanceprixjournalier.h
 	<vector>
@@ -102,7 +103,7 @@
 	"Bourse.h"
 	"Portefeuille.h"
 
-1683844498 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
+1683984751 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
 	<iostream>
 	<chrono>
 	<map>
@@ -115,4 +116,19 @@
 
 1682847148 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.h
 	<map>
+
+1683983083 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\menu.cpp
+	<time.h>
+	<iostream>
+	<fstream>
+	<stdlib.h>
+	"Menu.h"
+	"Bourse.h"
+
+1683983087 c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\menu.h
+	<windows.h>
+	<conio.h>
+	<stdlib.h>
+	<vector>
+	"PrixJournalier.h"
 

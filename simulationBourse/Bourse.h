@@ -28,6 +28,7 @@ class Bourse{
         //virtual PrixJournalier getPrixParDateParNom()
         virtual double movingAverage(string nom, unsigned int periode) const=0;
         virtual PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const=0;
+        virtual ~Bourse(){};
 };
 
 class BourseVecteur : public Bourse {
@@ -46,6 +47,7 @@ class BourseVecteur : public Bourse {
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
         PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
+        ~BourseVecteur(){};
 };
 
 class BourseVecteurOptimisee : public Bourse {
@@ -64,6 +66,7 @@ class BourseVecteurOptimisee : public Bourse {
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
         PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
+        ~BourseVecteurOptimisee(){};
 };
 
 class BourseMultiSet : public Bourse {
@@ -82,6 +85,7 @@ class BourseMultiSet : public Bourse {
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
         PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
+        ~BourseMultiSet(){};
 };
 
 class BourseMultiMap : public Bourse {
@@ -100,6 +104,7 @@ class BourseMultiMap : public Bourse {
         vector<PrixJournalier> getHistoriqueParAction(string nom) const;
         double movingAverage(string nom, unsigned int periode) const;
         PrixJournalier getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const;
+        ~BourseMultiMap(){};
 };
 class TestBourseVecteur
 {

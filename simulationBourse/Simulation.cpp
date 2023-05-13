@@ -403,7 +403,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                         {
                             achatBloque++;
                             stats["nonmbre d'achats bloques: "]++;
-                           // cout<<"Transaction bloquee: "<<transaction.getNomAction()<<","<<transaction.getQuantite()<<","<<transaction.getType()<<";"<<portefeuille.getSolde()<<endl;
+                            cout<<"Transaction bloquee: "<<transaction.getNomAction()<<","<<transaction.getQuantite()<<","<<transaction.getType()<<";"<<portefeuille.getSolde()<<endl;
                         }
 
                 }

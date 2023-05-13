@@ -384,48 +384,94 @@ vector<string> BourseMultiSet::getActionsDisponibleParDateParPrix(Date d, double
     return actionDispo;
 };
 //fix warning here (return only inside if)
+//PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
+//{
+//
+//    PrixJournalier pjRecent(dateFin, "", -1);
+//
+////    unsigned int i=0;
+//    if (!(dateAujourdhui<dateFin))
+//    {
+//        dateFin.incrementerDate();
+//        //PrixJournalier pj(dateFin, "", 0);
+//        multiset<PrixJournalier>:: iterator it=historique.begin();
+//        while(it->getDate()<dateFin && it!=historique.end())
+//        {
+//            if (it->getNom()==nom)
+//                pjRecent=*it;
+//            it++;
+//        }
+//        return pjRecent;
+//    }
+//
+//    return pjRecent;
+//
+//};
 PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
 {
-
-    PrixJournalier pjRecent;
-
-//    unsigned int i=0;
+    PrixJournalier pj(dateFin, "", 0);
+    PrixJournalier pjRecent(dateFin, "", -1);
     if (!(dateAujourdhui<dateFin))
     {
-        dateFin.incrementerDate();
-        //PrixJournalier pj(dateFin, "", 0);
-        multiset<PrixJournalier>:: iterator it=historique.begin();
-        while(it->getDate()<dateFin && it!=historique.end())
-        {
-            if (it->getNom()==nom)
-                pjRecent=*it;
-            it++;
-        }
-        return pjRecent;
+        auto it=historique.upper_bound(pj);
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        if(dateFin<it->getDate())
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        while(it->getNom()!=nom)
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        //cout<<!(dateFin<it->getDate())<<endl;
+        if(it->getNom()==nom && !(dateFin<it->getDate()))
+            return *it;
     }
+    return pjRecent;
+}
+//PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
+//{
+//
+//    PrixJournalier pjRecent;
+//
+////    unsigned int i=0;
+//    if (!(dateAujourdhui<dateFin))
+//    {
+//        //dateFin.incrementerDate();
+//        //PrixJournalier pj(dateFin, "", 0);
+//        multiset<PrixJournalier>:: iterator it=historique.begin();
+//        while(it->getDate()<dateFin && it!=historique.end())
+//        {
+//            if (it->getNom()==nom)
+//                pjRecent=*it;
+//            it++;
+//        }
+//        return pjRecent;
+//    }
+//
+//};
 
-};
 PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
 {
-
-    PrixJournalier pjRecent;
-
-//    unsigned int i=0;
+    PrixJournalier pj(dateFin, "", 0);
+    PrixJournalier pjRecent(dateFin, "", -1);
     if (!(dateAujourdhui<dateFin))
     {
-        //dateFin.incrementerDate();
-        //PrixJournalier pj(dateFin, "", 0);
-        multiset<PrixJournalier>:: iterator it=historique.begin();
-        while(it->getDate()<dateFin && it!=historique.end())
-        {
-            if (it->getNom()==nom)
-                pjRecent=*it;
-            it++;
-        }
-        return pjRecent;
+        auto it=historique.upper_bound(pj);
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        if(dateFin<it->getDate())
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        while(it->getNom()!=nom || it->getDate()==dateFin)
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        //cout<<!(dateFin<it->getDate())<<endl;
+        if(it->getNom()==nom )
+            pjRecent=*it;
     }
+    //cout<<dateAujourdhui<<endl;
+    //cout<<pjRecent.getNom()<<", "<<pjRecent.getPrix()<<", "<<pjRecent.getDate()<<endl;
+    return pjRecent;
 
-};
+}
 //parcours sequentiel d'un set (arbre, non contigu) prend beaucoup plus de temps que le parcours sequentiel d'un vecteur (contigu)
 vector<PrixJournalier> BourseMultiSet::getHistoriqueParAction(string nom) const
 {

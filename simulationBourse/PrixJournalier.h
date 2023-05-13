@@ -16,7 +16,8 @@ class PrixJournalier
         string getNom() const;
         double getPrix() const;
         friend istream& operator>>(istream& flux, PrixJournalier& pj);
-        bool operator<(PrixJournalier p)const {return (date<p.date);};
+        bool operator<(PrixJournalier const &p)const {return (date<p.date);};
+        bool operator>(PrixJournalier const &p)const {return (p.date<date);};
 
 };
 

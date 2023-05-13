@@ -18,7 +18,7 @@ int Date::getJour() const
     return jour;
 }
 
-bool Date::estuneanneebisextile()
+bool Date::estuneanneebisextile() const
 {
     if (annee % 400 == 0 )
         return true ;
@@ -28,7 +28,7 @@ bool Date::estuneanneebisextile()
         return true ;
     return false ;
 }
-int Date::NbrJourDuMois()
+int Date::NbrJourDuMois() const
 {
     if (mois == 2)
     {if (estuneanneebisextile())
@@ -102,6 +102,14 @@ bool Date::operator==(Date const &d) const
         return false;
 }
 
+bool Date::dateValide() const
+{
+    if (mois<=12 && mois>0)
+        if (jour>0 && jour<=this->NbrJourDuMois())
+            return true;
+    return false;
+}
+//TEST DATE:
 void TestDate::incrementerDate()
 {
     Date d(8,4,2023);

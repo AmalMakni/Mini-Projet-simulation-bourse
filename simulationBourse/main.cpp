@@ -18,21 +18,23 @@ using namespace std;
 
 //Test Unitaires Date
 
-//int main()
-//{
-    //cout<<"Tests Date:"<<endl;
-//    TestDate t;
-//    t.incrementerDate();
-//    t.incrementerDate_finDuMois30();
-//    t.incrementerDate_finDuMois31();
-//    t.incrementerDate_finDuMois_fevrier_28();
-//    t.incrementerDate_finDuMois_fevrier_29();
-//    t.incrementerDate_finAnnee();
-//    t.initialiserDate_chaine1();
-//    t.initialiserDate_chaine2();
-//    t.inferieur();
-//    return 0;
-//}
+int main()
+{
+    cout<<"Tests Date:"<<endl;
+    TestDate t;
+    t.incrementerDate();
+    t.incrementerDate_finDuMois30();
+    t.incrementerDate_finDuMois31();
+    t.incrementerDate_finDuMois_fevrier_28();
+    t.incrementerDate_finDuMois_fevrier_29();
+    t.incrementerDate_finAnnee();
+    t.initialiserDate_chaine1();
+    t.initialiserDate_chaine2();
+    t.inferieur();
+    Date d(1, 1, 2016);
+    cout<<d.dateValide()<<endl;
+    return 0;
+}
 
 //TESTS UNITAIRES PRIXJOURNALIER
 //int main()
@@ -191,33 +193,33 @@ using namespace std;
 //}
 
 //TEST SIMULATION
-int main()
-{
-    //srand(time(NULL));
-    srand(1);
-    PersistancePrixJournaliers p;
-    TraderAleatoir2 trader2;
-    TraderAleatoir1 trader;
-    TraderMovingAverage2 trader3;
-    TraderMovingAverage trader4;
-    TraderComparaison trader5;
-    Date d1(2,12,2015), d2(17,12,2015);
-    //Date d1(1,12,2015), d2(5,12,2015);
-
-    vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
-    ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
-    BourseVecteurOptimisee b2(d1,v);
-//    vector<PrixJournalier> historiqueAction=b2.getHistoriqueParAction("NKE");
-//    for(auto pj: historiqueAction)
-//    {
-//        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
-//    }
-//    cout<<"***"<<endl;
-    BourseVecteur b1(d1,v);
-    BourseMultiSet b3(d1, v);
-    BourseMultiMap b4(d1, v);
-    //Portefeuille porte(100);
-    auto stats = Simulation::executer(b2, trader5, d1, d2, 100);
-    for(auto it:stats){cout<<it.first<<"\t"<<it.second<<endl;}
-    //double m=b2.movingAverage("JEC", 3);
-}
+//int main()
+//{
+//    //srand(time(NULL));
+//    srand(1);
+//    PersistancePrixJournaliers p;
+//    TraderAleatoir2 trader2;
+//    TraderAleatoir1 trader;
+//    TraderMovingAverage2 trader3;
+//    TraderMovingAverage trader4;
+//    TraderComparaison trader5;
+//    Date d1(2,12,2015), d2(17,12,2015);
+//    //Date d1(1,12,2015), d2(5,12,2015);
+//
+//    vector<PrixJournalier> v=p.lirePrixJournaliersDUnFichier
+//    ("C:\\Users\\21625\\Documents\\2022-2023\\MP C++\\Mini-Projet-simulation-bourse\\simulationBourse\\prices_simple.csv");
+//    BourseVecteurOptimisee b2(d1,v);
+////    vector<PrixJournalier> historiqueAction=b2.getHistoriqueParAction("NKE");
+////    for(auto pj: historiqueAction)
+////    {
+////        cout<<pj.getNom()<<","<<pj.getDate()<<","<<pj.getPrix()<<endl;
+////    }
+////    cout<<"***"<<endl;
+//    BourseVecteur b1(d1,v);
+//    BourseMultiSet b3(d1, v);
+//    BourseMultiMap b4(d1, v);
+//    //Portefeuille porte(100);
+//    auto stats = Simulation::executer(b2, trader5, d1, d2, 100);
+//    for(auto it:stats){cout<<it.first<<"\t"<<it.second<<endl;}
+//    //double m=b2.movingAverage("JEC", 3);
+//}

@@ -10,8 +10,9 @@ class Date
         int jour;
         int mois;
         int annee;
-        bool estuneanneebisextile ();
-        int NbrJourDuMois ();
+        bool estuneanneebisextile () const;
+        //bool dateValide();
+        int NbrJourDuMois () const;
     public :
         Date ( int j , int m , int a );
         Date(string date);
@@ -21,6 +22,7 @@ class Date
         int getJour() const;
         int getMois() const;
         int getAnnee() const;
+        bool dateValide() const;
         bool operator<(Date const &b) const;
         bool operator==(Date const &d) const;
         friend ostream& operator<<(ostream& flux, Date const &d);

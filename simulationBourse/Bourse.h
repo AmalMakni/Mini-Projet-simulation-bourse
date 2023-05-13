@@ -13,15 +13,17 @@ class Bourse{
         Date dateAujourdhui;
     public :
         Bourse (Date date );
-        virtual void setDateAujourdhui(Date)=0;
         virtual vector<string> getActionsDisponibleParDate(Date) const =0 ;
+        virtual void setDateAujourdhui(Date)=0;
         virtual vector<PrixJournalier> getPrixJournalierParDate(Date) const =0 ;
         virtual vector<string> getActionsDisponibleAujourdhui() const =0;
         virtual vector<PrixJournalier> getPrixJournalierAujourdhui() const =0;
         virtual vector<PrixJournalier> getPrixJournalierParDateParPrix(Date, double) const =0;
         virtual vector<string> getActionsDisponibleParDateParPrix(Date, double) const =0;
-        virtual vector<string> getActionsDisponibleAujourdhuiParPrix(double budget) const {return getActionsDisponibleParDateParPrix(dateAujourdhui, budget);};
-        virtual vector<PrixJournalier> getPrixJournalierAujourdhuiParPrix(double budget) const {return getPrixJournalierParDateParPrix(dateAujourdhui, budget);};
+        virtual vector<string> getActionsDisponibleAujourdhuiParPrix(double budget) const
+        {return getActionsDisponibleParDateParPrix(dateAujourdhui, budget);};
+        virtual vector<PrixJournalier> getPrixJournalierAujourdhuiParPrix(double budget) const
+        {return getPrixJournalierParDateParPrix(dateAujourdhui, budget);};
         virtual PrixJournalier getPrixJournalierLePlusRecent(string nom, Date dateFin) const=0;
         virtual vector<PrixJournalier> getHistoriqueParAction(string nom) const=0;
         virtual Date getDateAujourdhui() const {return dateAujourdhui;};

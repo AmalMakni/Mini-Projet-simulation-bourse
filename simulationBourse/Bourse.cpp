@@ -410,15 +410,17 @@ vector<string> BourseMultiSet::getActionsDisponibleParDateParPrix(Date d, double
 PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
 {
     PrixJournalier pj(dateFin, "", 0);
-    PrixJournalier pjRecent(dateFin, "", -1);
+    PrixJournalier pjRecent(dateFin, "", 0);
     if (!(dateAujourdhui<dateFin))
     {
         auto it=historique.upper_bound(pj);
+        if(it==historique.end())
+            it--;
         //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
         if(dateFin<it->getDate())
             it--;
         //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
-        while(it->getNom()!=nom)
+        while(it->getNom()!=nom && it!=historique.begin())
             it--;
         //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
         //cout<<!(dateFin<it->getDate())<<endl;
@@ -452,15 +454,17 @@ PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecent(string nom, Date da
 PrixJournalier BourseMultiSet::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
 {
     PrixJournalier pj(dateFin, "", 0);
-    PrixJournalier pjRecent(dateFin, "", -1);
+    PrixJournalier pjRecent(dateFin, "", 0);
     if (!(dateAujourdhui<dateFin))
     {
         auto it=historique.upper_bound(pj);
+         if(it==historique.end())
+            it--;
         //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
         if(dateFin<it->getDate())
             it--;
         //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
-        while(it->getNom()!=nom || it->getDate()==dateFin)
+        while((it->getNom()!=nom || it->getDate()==dateFin) && it!=historique.begin())
             it--;
         //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
         //cout<<!(dateFin<it->getDate())<<endl;
@@ -606,49 +610,97 @@ vector<string> BourseMultiMap::getActionsDisponibleParDateParPrix(Date d, double
     return actionDispo;
 };
 //fix warning here (return only inside if)
+//PrixJournalier BourseMultiMap::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
+//{
+//
+//    PrixJournalier pjRecent;
+//
+////    unsigned int i=0;
+//    if (!(dateAujourdhui<dateFin))
+//    {
+//        dateFin.incrementerDate();
+//        //PrixJournalier pj(dateFin, "", 0);
+//        auto it=historique.begin();
+//        while(it->second.getDate()<dateFin && it!=historique.end())
+//        {
+//            if (it->second.getNom()==nom)
+//                pjRecent=it->second;
+//            it++;
+//        }
+//        return pjRecent;
+//    }
+//
+//};
 PrixJournalier BourseMultiMap::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
 {
-
-    PrixJournalier pjRecent;
-
-//    unsigned int i=0;
+    PrixJournalier pj(dateFin, "", 0);
+    PrixJournalier pjRecent(dateFin, "", -1);
     if (!(dateAujourdhui<dateFin))
     {
-        dateFin.incrementerDate();
-        //PrixJournalier pj(dateFin, "", 0);
-        auto it=historique.begin();
-        while(it->second.getDate()<dateFin && it!=historique.end())
-        {
-            if (it->second.getNom()==nom)
-                pjRecent=it->second;
-            it++;
-        }
-        return pjRecent;
-    }
+        auto it=historique.upper_bound(dateFin);
+        if(it==historique.end())
+            it--;
 
-};
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        if(dateFin<it->second.getDate())
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        while(it->second.getNom()!=nom && it!=historique.begin())
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        //cout<<!(dateFin<it->getDate())<<endl;
+        if(it->second.getNom()==nom && !(dateFin<it->second.getDate()))
+            return it->second;
+    }
+    return pjRecent;
+}
+
+//PrixJournalier BourseMultiMap::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
+//{
+//
+//    PrixJournalier pjRecent;
+//
+////    unsigned int i=0;
+//    if (!(dateAujourdhui<dateFin))
+//    {
+//        //dateFin.incrementerDate();
+//        //PrixJournalier pj(dateFin, "", 0);
+//        auto it=historique.begin();
+//        while(it->second.getDate()<dateFin && it!=historique.end())
+//        {
+//            if (it->second.getNom()==nom)
+//                pjRecent=it->second;
+//            it++;
+//        }
+//        return pjRecent;
+//    }
+//    //return pjRecent;
+//
+//};
 PrixJournalier BourseMultiMap::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
 {
-
-    PrixJournalier pjRecent;
-
-//    unsigned int i=0;
+    PrixJournalier pj(dateFin, "", 0);
+    PrixJournalier pjRecent(dateFin, "", -1);
     if (!(dateAujourdhui<dateFin))
     {
-        //dateFin.incrementerDate();
-        //PrixJournalier pj(dateFin, "", 0);
-        auto it=historique.begin();
-        while(it->second.getDate()<dateFin && it!=historique.end())
-        {
-            if (it->second.getNom()==nom)
-                pjRecent=it->second;
-            it++;
-        }
-        return pjRecent;
-    }
-    //return pjRecent;
+        auto it=historique.upper_bound(dateFin);
+        if(it==historique.end())
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
 
-};
+        if(dateFin<it->second.getDate())
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        while((it->second.getNom()!=nom || it->second.getDate()==dateFin) && it!=historique.begin())
+            it--;
+        //cout<<it->getNom()<<", "<<it->getPrix()<<", "<<it->getDate()<<endl;
+        //cout<<!(dateFin<it->getDate())<<endl;
+        if(it->second.getNom()==nom && !(dateFin<it->second.getDate()))
+            return it->second;
+    }
+    return pjRecent;
+}
+
 //parcours sequentiel d'un set (arbre, non contigu) prend beaucoup plus de temps que le parcours sequentiel d'un vecteur (contigu)
 vector<PrixJournalier> BourseMultiMap::getHistoriqueParAction(string nom) const
 {

@@ -241,13 +241,13 @@ Transaction TraderMovingAverage::choisirTransaction(const Bourse& bourse, const 
                 m+=pj.getPrix();
             }
             m=m/(historiqueAction.size());
-            cout<<titres[i].getNomAction()<<": "<<m<<endl;
+            //cout<<titres[i].getNomAction()<<": "<<m<<endl;
             PrixJournalier pjAujourdhui=bourse.getPrixJournalierLePlusRecent(titres[i].getNomAction(), bourse.getDateAujourdhui());
-            cout<<pjAujourdhui.getNom()<<","<<pjAujourdhui.getPrix()<<","<<pjAujourdhui.getDate()<<endl;
+            //cout<<pjAujourdhui.getNom()<<","<<pjAujourdhui.getPrix()<<","<<pjAujourdhui.getDate()<<endl;
             if(pjAujourdhui.getDate()==bourse.getDateAujourdhui() && pjAujourdhui.getPrix()<m)
             {
                 Transaction tx(vente ,titres[i].getNomAction(), titres[i].getQuantite());
-                cout<<"Vente: "<<bourse.getDateAujourdhui()<<endl;
+                //cout<<"Vente: "<<bourse.getDateAujourdhui()<<endl;
                 return tx;
             }
             i++;
@@ -280,7 +280,7 @@ Transaction TraderMovingAverage::choisirTransaction(const Bourse& bourse, const 
         {
             int qte=floor(portefeuille.getSolde()/pjDispo[maximum].getPrix());
             Transaction tx(achat, pjDispo[maximum].getNom(), qte);
-            cout<<"achat: "<<bourse.getDateAujourdhui()<<endl;
+            //cout<<"achat: "<<bourse.getDateAujourdhui()<<endl;
             return tx;
         }
     }
@@ -302,6 +302,7 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
         while(i<titres.size())
         {
             //vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(titres[i].getNomAction());
+            //change this:
             double m=bourse.movingAverage(titres[i].getNomAction(), 3);
             //cout<<titres[i].getNomAction()<<" moving average: "<<m<<endl;
             PrixJournalier pjAujourdhui=bourse.getPrixJournalierLePlusRecent(titres[i].getNomAction(), bourse.getDateAujourdhui());
@@ -348,7 +349,21 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
 
 Transaction TraderComparaison::choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille)
 {
+//    Date d(19,10,2015);
+//    if (bourse.getDateAujourdhui()==d)
+//    {
+//        Transaction tx(rien, "", 0);
+//        return tx;
+//    }
+    Date d(4,1,2010);
+    if (bourse.getDateAujourdhui()==d )
+    {
+        Transaction tx(rien, "", 0);
+        return tx;
+    }
+    //if(bourse.getDateAujourdhui==d)
     vector<Titre> titres=portefeuille.getTitres();
+    //cout<<bourse.getDateAujourdhui()<<endl;
     if(titres.size()>0)
     {
         for(auto t: titres)
@@ -359,6 +374,7 @@ Transaction TraderComparaison::choisirTransaction(const Bourse& bourse, const Po
                 PrixJournalier pjHier=bourse.getPrixJournalierLePlusRecentV2(t.getNomAction(), bourse.getDateAujourdhui());
                 if (pjHier.getPrix()<pjAujourdhui.getPrix())
                 {
+                    //cout<<"vente"<<","<<t.getNomAction()<<","<< t.getQuantite();
                     Transaction tx(vente, t.getNomAction(), t.getQuantite());
                     return tx;
                 }
@@ -375,9 +391,11 @@ Transaction TraderComparaison::choisirTransaction(const Bourse& bourse, const Po
         vector<double> differenceAujourdhuiHier;
         for (auto pj: pjDispo)
         {
+            //cout<<pj.getNom()<<endl;
             PrixJournalier pjHier=bourse.getPrixJournalierLePlusRecentV2(pj.getNom(), bourse.getDateAujourdhui());
             differenceAujourdhuiHier.push_back(pjHier.getPrix()-pj.getPrix());
         }
+        //cout<<differenceAujourdhuiHier.size()<<endl;
         unsigned int j=0;
         unsigned int maximum=0;
         for (j=0;j<differenceAujourdhuiHier.size(); j++)
@@ -389,6 +407,7 @@ Transaction TraderComparaison::choisirTransaction(const Bourse& bourse, const Po
         {
             int qte=floor(portefeuille.getSolde()/pjDispo[maximum].getPrix());
             Transaction tx(achat, pjDispo[maximum].getNom(), qte);
+            //cout<<"achat"<<","<<pjDispo[maximum].getNom()<<","<< qte;
             //cout<<"achat: "<<bourse.getDateAujourdhui()<<", MovingAaverage difference: "<<movingAverages[maximum]<<", nom: "<<pjDispo[maximum].getNom() <<endl;
             return tx;
         }

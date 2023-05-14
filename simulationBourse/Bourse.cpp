@@ -267,20 +267,13 @@ vector<PrixJournalier> BourseVecteurOptimisee::getHistoriqueParAction(string nom
 }
 double BourseVecteurOptimisee::movingAverage(string nom, unsigned int periode) const
 {
-    //cout<<historique[0].getDate();
     vector<PrixJournalier> historiqueAction=getHistoriqueParAction(nom);
     double m=0;
 
     if(dateAujourdhui==historique[0].getDate())
         return m;
-//    vector<PrixJournalier>:: iterator i=historiqueAction.end();
-//    i--;
-//    PrixJournalier value=*i;
     if (periode>historiqueAction.size())
         periode=historiqueAction.size();
-//        cout<<historiqueAction.size()-periode<<endl;
-//        int nb=historiqueAction.size()-periode;
-//        cout<<historiqueAction[nb].getDate();
     if (historiqueAction.size()==0)
         return m;
     for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
@@ -506,28 +499,9 @@ double BourseMultiSet::movingAverage(string nom, unsigned int periode) const
     Date d(4,1,2010);
     if(dateAujourdhui==d)
         return m;
-    //cout<<dateAujourdhui<<endl;
-//    vector<PrixJournalier>:: iterator i=historiqueAction.end();
-//    i--;
-//    PrixJournalier value=*i;
     if (periode>historiqueAction.size())
         periode=historiqueAction.size();
-//        cout<<historiqueAction.size()-periode<<endl;
-//        int nb=historiqueAction.size()-periode;
-//        cout<<historiqueAction[nb].getDate();
-//you were here
-//    for (vector<PrixJournalier>:: iterator i=historiqueAction.end()-1; i>historiqueAction.end()-periode; i--)
-//    {
-//        //m+=historiqueAction[i].getPrix();
-//        m+=i->getPrix();
-//        //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
-//    }
-//    //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
-//    //m+=historiqueAction[historiqueAction.size()-periode].getPrix();
-//    vector<PrixJournalier>:: iterator i=historiqueAction.end()-periode;
-//    m+=i->getPrix();
-//    m=m/periode;
-    //cout<<m;
+
     if (historiqueAction.size()==0)
         return m;
     for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
@@ -815,7 +789,6 @@ void TestBourseVecteur::getPrixJournalierParDate_DateExistante()
 
 void TestBourseVecteur::getPrixJournalierParDate_DateNonExistante()
 {
-    //bool test;
     PersistancePrixJournaliers p;
     vector<PrixJournalier> v;
     v=p.lirePrixJournaliersDUnFichier("C:\\Users\\21625\\Desktop\\New folder\\test.csv");

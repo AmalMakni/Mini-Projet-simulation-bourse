@@ -75,7 +75,7 @@ class BourseMultiSet : public Bourse {
     private :
          multiset <PrixJournalier> historique  ;
     public :
-        BourseMultiSet (Date date , vector<PrixJournalier> pj); //change to ref
+        BourseMultiSet (Date date , vector<PrixJournalier> pj);
         void setDateAujourdhui(Date);
         vector<string> getActionsDisponibleParDate(Date) const;
         vector<PrixJournalier> getPrixJournalierParDate(Date) const;
@@ -94,7 +94,7 @@ class BourseMultiMap : public Bourse {
     private :
          multimap <Date , PrixJournalier> historique  ;
     public :
-        BourseMultiMap (Date date , vector<PrixJournalier> & pj); //change to ref
+        BourseMultiMap (Date date , vector<PrixJournalier> & pj);
         void setDateAujourdhui(Date);
         vector<string> getActionsDisponibleParDate(Date) const;
         vector<PrixJournalier> getPrixJournalierParDate(Date) const;

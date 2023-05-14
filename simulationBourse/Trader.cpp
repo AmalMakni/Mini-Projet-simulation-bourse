@@ -8,44 +8,6 @@
 #include "Portefeuille.h"
 #include "Titre.h"
 
-//Transaction TraderAleatoir1::choisirTransaction (const Bourse& bourse, const Portefeuille &portefeuille)
-//{
-//    TypeTransaction type = static_cast<TypeTransaction>(rand()%3);
-//    if (type == achat)
-//    {
-//        vector <string> actionsDisponibles = bourse.getActionsDisponibleAujourdhui();
-//        cout<<actionsDisponibles.size()<<endl;
-//        int positionAction =rand()%actionsDisponibles.size();
-//        string nom=bourse.getActionsDisponibleAujourdhui()[positionAction];
-//        PrixJournalier pj=bourse.getPrixJournalierAujourdhui()[positionAction];
-//        int quantite=1+(rand()% static_cast <int> (floor(portefeuille.getSolde() / pj.getPrix())));
-//        Transaction tx (type, nom, quantite);
-//        return tx;
-//    }
-//    else if (type == vente)
-//    {
-//        vector <Titre > titres=portefeuille.getTitres();
-//        if (titres.size()>0)
-//        {
-//            int positionAction =rand()%titres.size();
-//            int quantite=1+(rand()% titres[positionAction].getQuantite());
-//            Transaction tx(type, titres[positionAction].getNomAction(), quantite);
-//            return tx;
-//        }
-//        else
-//        {
-//            Transaction tx(type, "", 0);
-//            return tx;
-//        }
-//    }
-//    else
-//    {
-//        Transaction tx(type, "", 0);
-//        return tx;
-//    }
-//
-//}
-//version optimisee
 Transaction TraderAleatoir1::choisirTransaction (const Bourse& bourse, const Portefeuille &portefeuille)
 {
     TypeTransaction type = static_cast<TypeTransaction>(rand()%3);
@@ -91,64 +53,7 @@ Transaction TraderAleatoir1::choisirTransaction (const Bourse& bourse, const Por
     }
 
 }
-//version non optimisee
-//Transaction TraderAleatoir2::choisirTransaction (const Bourse& bourse, const Portefeuille &portefeuille)
-//{
-//    if (portefeuille.getTitres().empty())
-//    {
-//        vector <string> actionsDisponibles = bourse.getActionsDisponibleAujourdhui();
-//        //cout<<actionsDisponibles.size()<<endl;
-//        int positionAction =rand()%actionsDisponibles.size();
-//        //cout<<positionAction<<endl;
-//        string nom=bourse.getActionsDisponibleAujourdhui()[positionAction];
-//        //cout<<nom<<endl;
-//        PrixJournalier pj=bourse.getPrixJournalierAujourdhui()[positionAction];
-//        //cout<<pj.getDate()<<","<<pj.getNom()<<","<<pj.getPrix()<<";";
-//        //cout<<static_cast <int> (floor(portefeuille.getSolde() / pj.getPrix()))<<endl;
-//        int qmax=static_cast <int> (floor(portefeuille.getSolde() / pj.getPrix()));
-//        int quantite=0;
-//        if (qmax>0)
-//            quantite=1+(rand()% static_cast <int> (floor(portefeuille.getSolde() / pj.getPrix())));
-//
-//        Transaction tx (achat, nom, quantite);
-//        return tx;
-//    }
-//    else
-//    {
-//        TypeTransaction type = static_cast<TypeTransaction>(rand()%3);
-//        if (type == achat)
-//        {
-//            vector <string> actionsDisponibles = bourse.getActionsDisponibleAujourdhui();
-//            cout<<actionsDisponibles.size()<<endl;
-//            int positionAction =rand()%actionsDisponibles.size();
-//            string nom=bourse.getActionsDisponibleAujourdhui()[positionAction];
-//            PrixJournalier pj=bourse.getPrixJournalierAujourdhui()[positionAction];
-//            int qmax=static_cast <int> (floor(portefeuille.getSolde() / pj.getPrix()));
-//            int quantite=0;
-//            if (qmax>0)
-//                quantite=1+(rand()% static_cast <int> (floor(portefeuille.getSolde() / pj.getPrix())));
-//
-//            Transaction tx (type, nom, quantite);
-//            return tx;
-//        }
-//        else if (type == vente)
-//        {
-//            vector <Titre > titres=portefeuille.getTitres();
-//            int positionAction =rand()%titres.size();
-//            int quantite=1+(rand()% titres[positionAction].getQuantite());
-//            Transaction tx(type, titres[positionAction].getNomAction(), quantite);
-//            return tx;
-//        }
-//        else
-//        {
-//            Transaction tx(type, "", 0);
-//            return tx;
-//        }
-//    }
-//
-//}
 
-//Version optimisee
 Transaction TraderAleatoir2::choisirTransaction (const Bourse& bourse, const Portefeuille &portefeuille)
 {
     if (portefeuille.getTitres().empty())
@@ -358,12 +263,6 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
 
 Transaction TraderComparaison::choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille)
 {
-//    Date d(19,10,2015);
-//    if (bourse.getDateAujourdhui()==d)
-//    {
-//        Transaction tx(rien, "", 0);
-//        return tx;
-//    }
     Date d(4,1,2010);
     if (bourse.getDateAujourdhui()==d )
     {

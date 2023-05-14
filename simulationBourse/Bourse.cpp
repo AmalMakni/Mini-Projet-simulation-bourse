@@ -215,10 +215,11 @@ vector<string> BourseVecteurOptimisee::getActionsDisponibleParDateParPrix(Date d
     }
     return actionDispo;
 };
-//fix warning here (return only inside if)
+
 PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecent(string nom, Date dateFin) const
 {
     PrixJournalier pjRecent;
+    PrixJournalier pj(dateFin, "", 0);
     unsigned int i=0;
     if (!(dateAujourdhui<dateFin))
     {
@@ -231,11 +232,13 @@ PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecent(string nom,
         }
         return pjRecent;
     }
+    return pj;
 
 };
 PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecentV2(string nom, Date dateFin) const
 {
     PrixJournalier pjRecent;
+    PrixJournalier pj(dateFin, "", 0);
     unsigned int i=0;
     if (!(dateAujourdhui<dateFin))
     {
@@ -248,7 +251,7 @@ PrixJournalier BourseVecteurOptimisee::getPrixJournalierLePlusRecentV2(string no
         }
         return pjRecent;
     }
-
+    return pj;
 };
 vector<PrixJournalier> BourseVecteurOptimisee::getHistoriqueParAction(string nom) const
 {
@@ -264,8 +267,12 @@ vector<PrixJournalier> BourseVecteurOptimisee::getHistoriqueParAction(string nom
 }
 double BourseVecteurOptimisee::movingAverage(string nom, unsigned int periode) const
 {
+    //cout<<historique[0].getDate();
     vector<PrixJournalier> historiqueAction=getHistoriqueParAction(nom);
     double m=0;
+
+    if(dateAujourdhui==historique[0].getDate())
+        return m;
 //    vector<PrixJournalier>:: iterator i=historiqueAction.end();
 //    i--;
 //    PrixJournalier value=*i;
@@ -274,6 +281,8 @@ double BourseVecteurOptimisee::movingAverage(string nom, unsigned int periode) c
 //        cout<<historiqueAction.size()-periode<<endl;
 //        int nb=historiqueAction.size()-periode;
 //        cout<<historiqueAction[nb].getDate();
+    if (historiqueAction.size()==0)
+        return m;
     for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
     {
         m+=historiqueAction[i].getPrix();
@@ -491,8 +500,13 @@ vector<PrixJournalier> BourseMultiSet::getHistoriqueParAction(string nom) const
 }
 double BourseMultiSet::movingAverage(string nom, unsigned int periode) const
 {
+
     vector<PrixJournalier> historiqueAction=getHistoriqueParAction(nom);
     double m=0;
+    Date d(4,1,2010);
+    if(dateAujourdhui==d)
+        return m;
+    //cout<<dateAujourdhui<<endl;
 //    vector<PrixJournalier>:: iterator i=historiqueAction.end();
 //    i--;
 //    PrixJournalier value=*i;
@@ -501,19 +515,29 @@ double BourseMultiSet::movingAverage(string nom, unsigned int periode) const
 //        cout<<historiqueAction.size()-periode<<endl;
 //        int nb=historiqueAction.size()-periode;
 //        cout<<historiqueAction[nb].getDate();
-
-    for (vector<PrixJournalier>:: iterator i=historiqueAction.end()-1; i>historiqueAction.end()-periode; i--)
+//you were here
+//    for (vector<PrixJournalier>:: iterator i=historiqueAction.end()-1; i>historiqueAction.end()-periode; i--)
+//    {
+//        //m+=historiqueAction[i].getPrix();
+//        m+=i->getPrix();
+//        //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
+//    }
+//    //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
+//    //m+=historiqueAction[historiqueAction.size()-periode].getPrix();
+//    vector<PrixJournalier>:: iterator i=historiqueAction.end()-periode;
+//    m+=i->getPrix();
+//    m=m/periode;
+    //cout<<m;
+    if (historiqueAction.size()==0)
+        return m;
+    for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
     {
-        //m+=historiqueAction[i].getPrix();
-        m+=i->getPrix();
+        m+=historiqueAction[i].getPrix();
         //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
     }
     //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
-    //m+=historiqueAction[historiqueAction.size()-periode].getPrix();
-    vector<PrixJournalier>:: iterator i=historiqueAction.end()-periode;
-    m+=i->getPrix();
+    m+=historiqueAction[historiqueAction.size()-periode].getPrix();
     m=m/periode;
-    //cout<<m;
 
     return m;
 }
@@ -720,16 +744,17 @@ double BourseMultiMap::movingAverage(string nom, unsigned int periode) const
     double m=0;
     if (periode>historiqueAction.size())
         periode=historiqueAction.size();
-    for (vector<PrixJournalier>:: iterator i=historiqueAction.end()-1; i>historiqueAction.end()-periode; i--)
+    if (historiqueAction.size()==0)
+        return m;
+    for (unsigned int i=historiqueAction.size()-1; i>historiqueAction.size()-periode; i--)
     {
-        m+=i->getPrix();
+        m+=historiqueAction[i].getPrix();
         //cout<<historiqueAction[i].getDate()<<","<<historiqueAction[i].getNom()<<","<<historiqueAction[i].getPrix()<<endl;
     }
     //cout<<historiqueAction[historiqueAction.size()-periode].getDate()<<","<<historiqueAction[historiqueAction.size()-periode].getNom()<<","<<historiqueAction[historiqueAction.size()-periode].getPrix()<<endl;
-    //m+=historiqueAction[historiqueAction.size()-periode].getPrix();
-    vector<PrixJournalier>:: iterator i=historiqueAction.end()-periode;
-    m+=i->getPrix();
+    m+=historiqueAction[historiqueAction.size()-periode].getPrix();
     m=m/periode;
+
     //cout<<m;
 
     return m;

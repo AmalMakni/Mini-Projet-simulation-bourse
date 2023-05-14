@@ -292,6 +292,13 @@ Transaction TraderMovingAverage::choisirTransaction(const Bourse& bourse, const 
 
 Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const Portefeuille &portefeuille)
 {
+    Date d(4,1,2010);
+    if(bourse.getDateAujourdhui()==d)
+        {
+            Transaction tx(rien, "", 0);
+            return tx;
+
+        }
     vector<Titre> titres=portefeuille.getTitres();
     if (titres.size()!=0)
     {
@@ -303,7 +310,7 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
         {
             //vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(titres[i].getNomAction());
             //change this:
-            double m=bourse.movingAverage(titres[i].getNomAction(), 3);
+            double m=bourse.movingAverage(titres[i].getNomAction(), 50);
             //cout<<titres[i].getNomAction()<<" moving average: "<<m<<endl;
             PrixJournalier pjAujourdhui=bourse.getPrixJournalierLePlusRecent(titres[i].getNomAction(), bourse.getDateAujourdhui());
             //cout<<pjAujourdhui.getNom()<<","<<pjAujourdhui.getPrix()<<","<<pjAujourdhui.getDate()<<endl;
@@ -323,7 +330,9 @@ Transaction TraderMovingAverage2::choisirTransaction(const Bourse& bourse, const
         for (auto pj: pjDispo)
         {
             //vector <PrixJournalier> historiqueAction=bourse.getHistoriqueParAction(pj.getNom());
-            double m=bourse.movingAverage(pj.getNom(), 3);
+            //cout<<pj.getNom()<<endl;
+            double m=bourse.movingAverage(pj.getNom(), 50);
+            //cout<<pj.getNom()<<": "<<m<<endl;
             movingAverages.push_back(pj.getPrix()-m);
         }
         unsigned int j=0;

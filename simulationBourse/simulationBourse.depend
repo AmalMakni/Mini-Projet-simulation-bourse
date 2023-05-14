@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1683998082 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
+1684077966 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\bourse.cpp
 	<iostream>
 	"date.h"
 	<vector>
@@ -27,7 +27,7 @@
 	<sstream>
 	"date.h"
 
-1684010242 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
+1684088323 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\main.cpp
 	<iostream>
 	<vector>
 	<fstream>
@@ -87,7 +87,7 @@
 	"Titre.h"
 	<vector>
 
-1683998693 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
+1684077589 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\trader.cpp
 	<stdlib.h>
 	<iostream>
 	<vector>
@@ -103,7 +103,7 @@
 	"Bourse.h"
 	"Portefeuille.h"
 
-1684002972 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
+1684084786 source:c:\users\21625\documents\2022-2023\mp c++\mini-projet-simulation-bourse\simulationbourse\simulation.cpp
 	<iostream>
 	<chrono>
 	<map>

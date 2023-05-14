@@ -342,7 +342,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
 {
     map<string, long> stats;
     Date dateCourante=dateDebut;
-    //b.setDateAujourdhui(dateCourante);
+    b.setDateAujourdhui(dateCourante);
     Transaction transaction;
     Portefeuille portefeuille(solde);
     int achatBloque=0, venteBloquee=0;
@@ -366,7 +366,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
         auto stop = chrono::high_resolution_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
         //auto duration = chrono::duration_cast<chrono::nanoseconds>(stop - start);
-        stats["TEMPS_GET_ACTIONS_DISPO_AUJ_NANOs"]+=duration.count();
+        stats["TEMPS_GET_ACTIONS_DISPO_AUJ_MICROs"]+=duration.count();
         stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"]++;
         int i=0;
         unsigned int j=0, k=0;
@@ -378,7 +378,7 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
                 transaction=t.choisirTransaction(b, portefeuille);
                 stop = chrono::high_resolution_clock::now();
                 duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-                stats["TEMPS_CHOISIR_ACTION_NANOs"]+=duration.count();
+                stats["TEMPS_CHOISIR_ACTION_MICROs"]+=duration.count();
                 stats["NOMBRE_CHOISIR_ACTION"]++;
                 //cout<<portefeuille.getSolde()<<endl;
                 if(transaction.getType()==achat)
@@ -481,9 +481,9 @@ map<string,long> Simulation::executer(Bourse& b , Trader& t , Date dateDebut , D
     portefeuille.deposerMontant(montant);
     stats["VALEUR_DU_PORTEFEUILLE"]=portefeuille.getSolde();
     if(stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"]!=0)
-        stats["TEMPS_MOYEN_GET_ACTIONS_DISPO_AUJ_NANOs"]=stats["TEMPS_GET_ACTIONS_DISPO_AUJ_NANOs"]/stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"];
+        stats["TEMPS_MOYEN_GET_ACTIONS_DISPO_AUJ_MICROs"]=stats["TEMPS_GET_ACTIONS_DISPO_AUJ_MICROs"]/stats["NOMBRE_GET_ACTIONS_DISPO_AUJ"];
     if(stats["NOMBRE_CHOISIR_ACTION"]!=0)
-        stats["TEMPS_MOYEN_CHOISIR_ACTION_NANOs"]=stats["TEMPS_CHOISIR_ACTION_NANOs"]/stats["NOMBRE_CHOISIR_ACTION"];
+        stats["TEMPS_MOYEN_CHOISIR_ACTION_MICROs"]=stats["TEMPS_CHOISIR_ACTION_MICROs"]/stats["NOMBRE_CHOISIR_ACTION"];
     stats["GAIN"]=stats["VALEUR_DU_PORTEFEUILLE"]-solde;
     stats["GAIN_EN_POURCENTAGE"]=(stats["GAIN"]/solde)*100;
 //    cout<<"nbTransactionsBloquee: "<<nbTransactionsBloquee<<endl;
